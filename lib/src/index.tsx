@@ -1,3 +1,3 @@
 export { default as DateInput, type DateInputProps } from './input/date-input';
 export { default as TimeInput, type TimeInputProps } from './input/time-input';
-export { Calendar, type CalendarProps } from './calendar';
+export { Calendar, type CalendarProps, RangeCalendar, type RangeCalendarProps } from './calendar';

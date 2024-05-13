@@ -1,15 +1,16 @@
-import React, { forwardRef, useMemo, type ForwardedRef, type ReactElement, type Ref } from 'react';
-import { CalendarDate, createCalendar, type Calendar as CalendarType, type DateValue } from '@internationalized/date';
-import { AriaCalendarGridProps, useCalendar } from '@react-aria/calendar';
+import React, { ElementRef, forwardRef, useMemo, useRef, type ForwardedRef, type ReactElement, type Ref } from 'react';
+import { createCalendar, type Calendar as CalendarType, type DateValue } from '@internationalized/date';
+import { AriaCalendarGridProps, useRangeCalendar } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
-import { useCalendarState } from '@react-stately/calendar';
-import { AriaCalendarProps } from '@react-types/calendar';
+import { useRangeCalendarState } from '@react-stately/calendar';
+import { AriaRangeCalendarProps } from '@react-types/calendar';
 
+import { useMergeRefs } from '../hooks/useMergeRefs';
 import { SupportedCalendars } from '../types/common.types';
 import { CalendarClassNames, CalendarProvider } from './calendar-context';
 import CalendarRoot from './calendar-root';
 
-interface Props<T extends DateValue> extends AriaCalendarProps<T> {
+interface Props<T extends DateValue> extends AriaRangeCalendarProps<T> {
   createCalendar?: (calendar: SupportedCalendars) => CalendarType | null;
   weekdayStyle?: AriaCalendarGridProps['weekdayStyle'];
   visibleMonths?: number;
@@ -17,7 +18,7 @@ interface Props<T extends DateValue> extends AriaCalendarProps<T> {
   classNames?: CalendarClassNames;
 }
 
-function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {
+function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {
   const {
     minValue,
     maxValue,
@@ -31,7 +32,7 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
   const visibleMonths = Math.max(1, Math.min(visibleMonthsProp, 3));
   const visibleDuration = useMemo(() => ({ months: visibleMonths }), [visibleMonths]);
 
-  const state = useCalendarState({
+  const state = useRangeCalendarState({
     ...props,
     locale,
     minValue,
@@ -43,12 +44,20 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
         : (createCalendarProp as typeof createCalendar),
   });
 
-  const { calendarProps, prevButtonProps, nextButtonProps, title, errorMessageProps } = useCalendar(props, state);
+  const domRef = useRef<ElementRef<'div'>>(null);
+
+  const { calendarProps, prevButtonProps, nextButtonProps, title, errorMessageProps } = useRangeCalendar(
+    props,
+    state,
+    domRef
+  );
+
+  const mergedRef = useMergeRefs(domRef, ref);
 
   return (
     <CalendarProvider value={{ state, visibleMonths, weekdayStyle, classNames }}>
       <CalendarRoot
-        ref={ref}
+        ref={mergedRef}
         calendarProps={calendarProps}
         prevButtonProps={prevButtonProps}
         nextButtonProps={nextButtonProps}
@@ -60,7 +69,7 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
   );
 }
 
-Calendar.displayName = 'Calendar';
+RangeCalendar.displayName = 'Calendar';
 
-export type CalendarProps<T extends DateValue = DateValue> = Props<T> & { ref?: Ref<HTMLElement> };
-export default forwardRef(Calendar) as <T extends DateValue>(props: CalendarProps<T>) => ReactElement;
+export type RangeCalendarProps<T extends DateValue = DateValue> = Props<T> & { ref?: Ref<HTMLElement> };
+export default forwardRef(RangeCalendar) as <T extends DateValue>(props: RangeCalendarProps<T>) => ReactElement;

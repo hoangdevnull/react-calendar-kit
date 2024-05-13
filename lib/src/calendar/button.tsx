@@ -21,7 +21,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, buttonRef) => 
       ref={mergeRef}
       data-pressed={withAttr(isPressed)}
       data-focus={withAttr(isFocusVisible)}
-      {...mergeProps(props, buttonProps, focusProps)}
+      className={props.className}
+      {...mergeProps(buttonProps, focusProps)}
     >
       {props.children}
     </button>

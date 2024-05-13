@@ -84,6 +84,9 @@ importers:
 
   test:
     dependencies:
+      '@internationalized/date':
+        specifier: ^3.5.3
+        version: 3.5.3
       '@types/node':
         specifier: 18.0.4
         version: 18.0.4

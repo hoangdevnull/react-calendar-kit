@@ -60,6 +60,8 @@ export function CalendarCell({ isPickerVisible, classNames, state, currentMonth,
         {...mergeProps(buttonProps, hoverProps, focusProps)}
         className={classNames.cellButton}
         ref={ref}
+        tabIndex={-1}
+        role="button"
         data-disabled={withAttr(isDisabled && !isInvalid)}
         data-focus-visible={withAttr(isFocused && isFocusVisible)}
         data-hover={withAttr(isHovered)}

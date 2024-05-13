@@ -1,0 +1,52 @@
+{
+  "name": "calendar-kit",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "prepublishOnly": "cp ../README.md . && pnpm build",
+    "postpublish": "rm README.md",
+    "build": "tsup src",
+    "dev": "tsup src --watch"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@internationalized/date": "^3.5.3",
+    "@react-aria/datepicker": "^3.10.0",
+    "@react-aria/i18n": "^3.11.0",
+    "@react-stately/datepicker": "^3.9.3",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@react-types/datepicker": "^3.7.3",
+    "@types/react": "18.0.15"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoangdevnull/calendar-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hoangdevnull/calendar-kit/issues"
+  },
+  "homepage": "https://github.com/hoangdevnull/calendar-kit#readme",
+  "author": {
+    "name": "hoangdevnull",
+    "url": "https://github.com/hoangdevnull"
+  }
+}

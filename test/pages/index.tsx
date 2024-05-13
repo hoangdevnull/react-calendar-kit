@@ -9,15 +9,15 @@ const fontSans = Roboto({ subsets: ['latin'], weight: ['300', '400', '500'] });
 const Page = () => {
   return (
     <div className={fontSans.className}>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-blue-950">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-900">
         <div className="flex flex-col gap-4">
           <DateInput
             classNames={{
               root: 'text-sm',
               label: 'text-sm text-gray-200 mb-1.5 block',
-              wrapper: 'flex gap-1 items-center border border-gray-600 w-fit px-3 py-2 rounded-md',
+              wrapper: 'flex gap-1 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
               segment:
-                'data-[placeholder=true]:text-gray-600 outline-none px-0.5 rounded-sm focus:bg-gray-400 focus:text-white text-white data-[type=literal]:text-gray-600',
+                'data-[placeholder=true]:text-gray-500 outline-none px-0.5 rounded-sm focus:bg-gray-800 focus:text-white text-white data-[type=literal]:text-gray-500',
             }}
             label="Date Input"
           />
@@ -26,9 +26,9 @@ const Page = () => {
             classNames={{
               root: 'text-sm',
               label: 'text-sm text-gray-200 mb-1.5 block',
-              wrapper: 'flex gap-1 items-center border border-gray-600 w-fit px-3 py-2 rounded-md',
+              wrapper: 'flex gap-1 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
               segment:
-                'data-[placeholder=true]:text-gray-600 outline-none px-0.5 rounded-sm focus:bg-gray-400 focus:text-white text-white data-[type=literal]:text-gray-600',
+                'data-[placeholder=true]:text-gray-500 outline-none px-0.5 rounded-sm focus:bg-gray-400 focus:text-white text-white data-[type=literal]:text-gray-500',
             }}
             label="Date Input"
           />
@@ -37,8 +37,11 @@ const Page = () => {
             classNames={{
               root: 'bg-gray-950 py-4 rounded-lg',
               gridWrapper: 'flex justify-between',
-              header: 'px-4 pb-4 flex items-center justify-between gap-2  [&_.chevron-icon]:flex-none',
-              nav: 'w-10 h-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-800',
+              header: 'relative px-4 mb-4 flex items-center justify-between gap-2  [&_.chevron-icon]:flex-none',
+              nav: 'min-w-10 aspect-square h-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-800 absolute top-1/2 -translate-y-1/2',
+              nextButton: 'right-3',
+              previousButton: 'left-3',
+              month: 'w-full flex items-center justify-center',
 
               gridHead: '',
               gridHeadRow: 'px-4 pb-2 flex justify-center text-default-400',
@@ -60,6 +63,8 @@ const Page = () => {
               ]),
             }}
             className="text-white"
+            visibleMonths={1}
+            weekdayStyle="short"
           />
         </div>
       </div>

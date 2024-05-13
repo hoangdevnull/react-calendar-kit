@@ -1,5 +1,5 @@
-import React, { forwardRef, type ForwardedRef, type ReactElement, type Ref } from 'react';
-import { createCalendar, type Calendar as CalendarType, type DateValue } from '@internationalized/date';
+import React, { forwardRef, useMemo, type ForwardedRef, type ReactElement, type Ref } from 'react';
+import { CalendarDate, createCalendar, type Calendar as CalendarType, type DateValue } from '@internationalized/date';
 import { AriaCalendarGridProps, useCalendar } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
 import { useCalendarState } from '@react-stately/calendar';
@@ -19,21 +19,24 @@ interface Props<T extends DateValue> extends AriaCalendarProps<T> {
 
 function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {
   const {
-    minValue,
-    maxValue,
+    minValue = new CalendarDate(1900, 1, 1),
+    maxValue = new CalendarDate(2099, 12, 31),
     className,
     classNames = {},
-    visibleMonths = 1,
-    weekdayStyle = 'narrow',
+    visibleMonths: visibleMonthsProp = 1,
+    weekdayStyle = 'short',
     createCalendar: createCalendarProp,
   } = props;
-
   const { locale } = useLocale();
+  const visibleMonths = Math.max(1, Math.min(visibleMonthsProp, 3));
+  const visibleDuration = useMemo(() => ({ months: visibleMonths }), [visibleMonths]);
+
   const state = useCalendarState({
     ...props,
     locale,
     minValue,
     maxValue,
+    visibleDuration,
     createCalendar:
       !createCalendarProp || typeof createCalendarProp !== 'function'
         ? createCalendar

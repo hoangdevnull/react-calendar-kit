@@ -13,7 +13,7 @@ export interface CalendarHeaderProps extends ElementProps<'div'> {
 const CalendarHeader = (props: CalendarHeaderProps) => {
   const { date, currentMonth } = props;
 
-  const { state, headerRef } = useCalendarContext();
+  const { state, headerRef, classNames } = useCalendarContext();
 
   const monthAndYearDateFormatter = useDateFormatter({
     month: 'long',
@@ -26,7 +26,7 @@ const CalendarHeader = (props: CalendarHeaderProps) => {
   const monthDateContent = monthAndYearDateFormatter.format(date.toDate(state.timeZone));
 
   return (
-    <div ref={headerRef}>
+    <div className={classNames.month} ref={headerRef}>
       <span key={currentMonth.month} aria-hidden={true}>
         {monthDateContent}
       </span>

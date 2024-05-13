@@ -6,6 +6,8 @@ import { createSafeContext } from '../utils/create-safe-context';
 
 export type CalendarClassNames = {
   nav?: string;
+  nextButton?: string;
+  previousButton?: string;
   month?: string;
   root?: string;
   container?: string;

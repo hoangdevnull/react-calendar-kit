@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CalendarDate, endOfMonth, getWeeksInMonth } from '@internationalized/date';
 import { useCalendarGrid } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
@@ -31,25 +31,36 @@ const CalendarGrid = (props: CalendarGridProps) => {
     state
   );
 
-  const bodyContent = [...new Array(weeksInMonth).keys()].map((weekIndex) => (
-    <tr
-      className={classNames.gridBodyRow}
-      key={weekIndex}
-      // makes the browser ignore the element and its children when tabbing
-      // @ts-ignore
-      inert={isHeaderExpanded ? true : undefined}
-    >
-      {state
-        .getDatesInWeek(weekIndex, startDate)
-        .map((date, i) =>
-          date ? (
-            <CalendarCell key={i} currentMonth={startDate} date={date} isPickerVisible={isHeaderExpanded} />
-          ) : (
-            <td key={i} />
-          )
-        )}
-    </tr>
-  ));
+  const bodyContent = useMemo(
+    () =>
+      [...new Array(weeksInMonth).keys()].map((weekIndex) => (
+        <tr
+          className={classNames.gridBodyRow}
+          key={weekIndex}
+          // makes the browser ignore the element and its children when tabbing
+          // @ts-ignore
+          inert={isHeaderExpanded ? true : undefined}
+        >
+          {state
+            .getDatesInWeek(weekIndex, startDate)
+            .map((date, i) =>
+              date ? (
+                <CalendarCell
+                  key={i}
+                  state={state}
+                  currentMonth={startDate}
+                  date={date}
+                  isPickerVisible={isHeaderExpanded}
+                  classNames={classNames}
+                />
+              ) : (
+                <td key={i} />
+              )
+            )}
+        </tr>
+      )),
+    [weeksInMonth]
+  );
 
   return (
     <table

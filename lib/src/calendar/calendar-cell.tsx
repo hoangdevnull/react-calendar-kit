@@ -5,28 +5,28 @@ import { useFocusRing } from '@react-aria/focus';
 import { useLocale } from '@react-aria/i18n';
 import { useHover } from '@react-aria/interactions';
 import { mergeProps } from '@react-aria/utils';
-import type { CalendarState, RangeCalendarState } from '@react-stately/calendar';
+import { CalendarState, RangeCalendarState } from '@react-stately/calendar';
 
 import { ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
-import { useCalendarContext } from './calendar-context';
+import { CalendarClassNames } from './calendar-context';
 
 export interface CalendarCellProps extends ElementProps<'td'>, AriaCalendarCellProps {
+  state: CalendarState | RangeCalendarState;
   isPickerVisible?: boolean;
   currentMonth: CalendarDate;
+  classNames?: CalendarClassNames;
 }
 
-export function CalendarCell(originalProps: CalendarCellProps) {
-  const { isPickerVisible, currentMonth, ...props } = originalProps;
-
-  const { state, classNames } = useCalendarContext();
+export function CalendarCell({ isPickerVisible, classNames, state, currentMonth, ...props }: CalendarCellProps) {
+  const { locale } = useLocale();
 
   const ref = useRef<HTMLButtonElement>(null);
-
   const { cellProps, buttonProps, isPressed, isSelected, isDisabled, isFocused, isInvalid, formattedDate } =
     useCalendarCell(
       {
         ...props,
+        date: props.date,
         isDisabled: !isSameMonth(props.date, currentMonth) || isPickerVisible,
       },
       state,
@@ -41,7 +41,6 @@ export function CalendarCell(originalProps: CalendarCellProps) {
   const highlightedRange = 'highlightedRange' in state && state.highlightedRange;
   const isSelectionStart = isSelected && highlightedRange && isSameDay(props.date, highlightedRange.start);
   const isSelectionEnd = isSelected && highlightedRange && isSameDay(props.date, highlightedRange.end);
-  const { locale } = useLocale();
   const dayOfWeek = getDayOfWeek(props.date, locale);
   const isRangeStart = isSelected && (isFirstSelectedAfterDisabled || dayOfWeek === 0 || props.date.day === 1);
   const isRangeEnd =

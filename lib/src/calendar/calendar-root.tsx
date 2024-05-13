@@ -32,13 +32,21 @@ const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>
     headers.push(
       <Fragment key={`calendar-header-${i}`}>
         {i === 0 && (
-          <Button {...prevButtonProps} className={classNames.nav} role={isRtl ? 'next-button' : 'previous-button'}>
+          <Button
+            {...prevButtonProps}
+            className={cn(classNames.nav, isRtl ? classNames.nextButton : classNames.previousButton)}
+            role={isRtl ? 'next-button' : 'previous-button'}
+          >
             {isRtl ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </Button>
         )}
         <CalendarHeader currentMonth={currentMonth} date={d} />
         {i === visibleMonths - 1 && (
-          <Button {...nextButtonProps} className={classNames.nav} role={isRtl ? 'previous-button' : 'next-button'}>
+          <Button
+            {...nextButtonProps}
+            className={cn(classNames.nav, isRtl ? classNames.previousButton : classNames.nextButton)}
+            role={isRtl ? 'previous-button' : 'next-button'}
+          >
             {isRtl ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </Button>
         )}

@@ -7,17 +7,19 @@ import { useHover } from '@react-aria/interactions';
 import { mergeProps } from '@react-aria/utils';
 import type { CalendarState, RangeCalendarState } from '@react-stately/calendar';
 
-import { ElementProps } from '../../dist/types/common.types';
+import { ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
+import { useCalendarContext } from './calendar-context';
 
 export interface CalendarCellProps extends ElementProps<'td'>, AriaCalendarCellProps {
-  state: CalendarState | RangeCalendarState;
   isPickerVisible?: boolean;
   currentMonth: CalendarDate;
 }
 
 export function CalendarCell(originalProps: CalendarCellProps) {
-  const { state, isPickerVisible, currentMonth, ...props } = originalProps;
+  const { isPickerVisible, currentMonth, ...props } = originalProps;
+
+  const { state, classNames } = useCalendarContext();
 
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -54,9 +56,10 @@ export function CalendarCell(originalProps: CalendarCellProps) {
   });
 
   return (
-    <td data-type="cell" {...cellProps}>
+    <td {...cellProps} role="grid-body-cell" className={classNames.gridBodyCell}>
       <span
         {...mergeProps(buttonProps, hoverProps, focusProps)}
+        className={classNames.cellButton}
         ref={ref}
         data-disabled={withAttr(isDisabled && !isInvalid)}
         data-focus-visible={withAttr(isFocused && isFocusVisible)}

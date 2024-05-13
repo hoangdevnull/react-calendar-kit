@@ -5,8 +5,8 @@ import { useLocale } from '@react-aria/i18n';
 import { useCalendarState } from '@react-stately/calendar';
 import { AriaCalendarProps } from '@react-types/calendar';
 
-import { SupportedCalendars } from '../../dist/types/common.types';
-import { CalendarProvider } from './calendar-context';
+import { SupportedCalendars } from '../types/common.types';
+import { CalendarClassNames, CalendarProvider } from './calendar-context';
 import CalendarRoot from './calendar-root';
 
 interface Props<T extends DateValue> extends AriaCalendarProps<T> {
@@ -14,15 +14,7 @@ interface Props<T extends DateValue> extends AriaCalendarProps<T> {
   weekdayStyle?: AriaCalendarGridProps['weekdayStyle'];
   visibleMonths?: number;
   className?: string;
-  classNames?: {
-    root?: string;
-    cell?: string;
-    grid?: string;
-    header?: string;
-    headerRow?: string;
-    headerCell?: string;
-    weekday?: string;
-  };
+  classNames?: CalendarClassNames;
 }
 
 function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {

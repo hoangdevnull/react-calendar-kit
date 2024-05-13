@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { CalendarDate } from '@internationalized/date';
 import { useDateFormatter } from '@react-aria/i18n';
 
-import { ElementProps } from '../../dist/types/common.types';
+import { ElementProps } from '../types/common.types';
 import { useCalendarContext } from './calendar-context';
 
 export interface CalendarHeaderProps extends ElementProps<'div'> {
@@ -13,7 +13,7 @@ export interface CalendarHeaderProps extends ElementProps<'div'> {
 const CalendarHeader = (props: CalendarHeaderProps) => {
   const { date, currentMonth } = props;
 
-  const { state, headerRef, isHeaderExpanded } = useCalendarContext();
+  const { state, headerRef } = useCalendarContext();
 
   const monthAndYearDateFormatter = useDateFormatter({
     month: 'long',
@@ -25,15 +25,13 @@ const CalendarHeader = (props: CalendarHeaderProps) => {
 
   const monthDateContent = monthAndYearDateFormatter.format(date.toDate(state.timeZone));
 
-  const headerTitle = (
-    <>
+  return (
+    <div ref={headerRef}>
       <span key={currentMonth.month} aria-hidden={true}>
         {monthDateContent}
       </span>
-    </>
+    </div>
   );
-
-  return <div ref={headerRef}>{headerTitle}</div>;
 };
 
 export default CalendarHeader;

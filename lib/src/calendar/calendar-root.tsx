@@ -17,9 +17,11 @@ interface Props extends CalendarAria {
 const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>) => {
   const { state, visibleMonths, classNames } = useCalendarContext();
   const currentMonth = state.visibleRange.start;
-  const { calendarProps, className, prevButtonProps, nextButtonProps, title, errorMessageProps } = props;
+  const { calendarProps, className, prevButtonProps, nextButtonProps } = props;
 
   const { direction: rtlDirection } = useLocale();
+
+  const isRtl = rtlDirection === 'rtl';
 
   const headers = [];
   const calendars = [];
@@ -30,11 +32,15 @@ const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>
     headers.push(
       <Fragment key={`calendar-header-${i}`}>
         {i === 0 && (
-          <Button {...prevButtonProps}>{rtlDirection === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}</Button>
+          <Button {...prevButtonProps} className={classNames.nav} role={isRtl ? 'next-button' : 'previous-button'}>
+            {isRtl ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </Button>
         )}
         <CalendarHeader currentMonth={currentMonth} date={d} />
         {i === visibleMonths - 1 && (
-          <Button {...nextButtonProps}>{rtlDirection === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}</Button>
+          <Button {...nextButtonProps} className={classNames.nav} role={isRtl ? 'previous-button' : 'next-button'}>
+            {isRtl ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </Button>
         )}
       </Fragment>
     );
@@ -47,8 +53,10 @@ const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>
 
   const calendarContent = (
     <>
-      <div key="header-wrapper">{headers}</div>
-      <div key="grid-wrapper">{calendars}</div>
+      <div className={classNames.container}>
+        <div className={classNames.header}>{headers}</div>
+        <div className={classNames.gridWrapper}>{calendars}</div>
+      </div>
     </>
   );
 

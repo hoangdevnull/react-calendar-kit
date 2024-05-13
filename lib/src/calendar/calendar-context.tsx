@@ -4,6 +4,23 @@ import type { CalendarState, RangeCalendarState } from '@react-stately/calendar'
 
 import { createSafeContext } from '../utils/create-safe-context';
 
+export type CalendarClassNames = {
+  nav?: string;
+  month?: string;
+  root?: string;
+  container?: string;
+  gridWrapper?: string;
+  header?: string;
+  grid?: string;
+  gridHead?: string;
+  gridHeadRow?: string;
+  gridHeadCell?: string;
+  gridBody?: string;
+  gridBodyRow?: string;
+  gridBodyCell?: string;
+  cellButton?: string;
+};
+
 export type ContextType<T extends CalendarState | RangeCalendarState> = {
   state: T;
   visibleMonths: number;
@@ -11,15 +28,7 @@ export type ContextType<T extends CalendarState | RangeCalendarState> = {
   weekdayStyle?: AriaCalendarGridProps['weekdayStyle'];
   isHeaderExpanded?: boolean;
 
-  classNames?: {
-    root?: string;
-    cell?: string;
-    grid?: string;
-    header?: string;
-    headerRow?: string;
-    headerCell?: string;
-    weekday?: string;
-  };
+  classNames?: CalendarClassNames;
 };
 
 export const [CalendarProvider, useCalendarContext] = createSafeContext<

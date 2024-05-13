@@ -4,8 +4,8 @@ import { useCalendarGrid } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
 import { CalendarPropsBase } from '@react-types/calendar';
 
-import { ElementProps } from '../../dist/types/common.types';
-import { withAttr } from '../utils';
+import { ElementProps } from '../types/common.types';
+import { cn, withAttr } from '../utils';
 import { CalendarCell } from './calendar-cell';
 import { useCalendarContext } from './calendar-context';
 
@@ -17,14 +17,14 @@ export interface CalendarGridProps extends ElementProps<'table'>, CalendarPropsB
 const CalendarGrid = (props: CalendarGridProps) => {
   const { startDate, currentMonth, ...etc } = props;
 
-  const { state, weekdayStyle, isHeaderExpanded } = useCalendarContext();
+  const { state, weekdayStyle, isHeaderExpanded, classNames } = useCalendarContext();
 
   const { locale } = useLocale();
   const weeksInMonth = getWeeksInMonth(startDate, locale);
 
   const { gridProps, headerProps, weekDays } = useCalendarGrid(
     {
-      ...props,
+      ...etc,
       weekdayStyle,
       endDate: endOfMonth(startDate),
     },
@@ -33,6 +33,7 @@ const CalendarGrid = (props: CalendarGridProps) => {
 
   const bodyContent = [...new Array(weeksInMonth).keys()].map((weekIndex) => (
     <tr
+      className={classNames.gridBodyRow}
       key={weekIndex}
       // makes the browser ignore the element and its children when tabbing
       // @ts-ignore
@@ -42,13 +43,7 @@ const CalendarGrid = (props: CalendarGridProps) => {
         .getDatesInWeek(weekIndex, startDate)
         .map((date, i) =>
           date ? (
-            <CalendarCell
-              key={i}
-              currentMonth={startDate}
-              date={date}
-              isPickerVisible={isHeaderExpanded}
-              state={state}
-            />
+            <CalendarCell key={i} currentMonth={startDate} date={date} isPickerVisible={isHeaderExpanded} />
           ) : (
             <td key={i} />
           )
@@ -57,17 +52,23 @@ const CalendarGrid = (props: CalendarGridProps) => {
   ));
 
   return (
-    <table {...gridProps} aria-hidden={withAttr(isHeaderExpanded)} tabIndex={-1}>
-      <thead {...headerProps} data-slot="grid-header">
-        <tr data-slot="grid-header-row">
+    <table
+      {...gridProps}
+      role="grid"
+      className={cn(classNames.grid, gridProps.className)}
+      aria-hidden={withAttr(isHeaderExpanded)}
+      tabIndex={-1}
+    >
+      <thead {...headerProps} className={cn(classNames.gridHead, headerProps.className)} role="grid-header">
+        <tr className={classNames.gridHeadRow} role="grid-header-row">
           {weekDays.map((day, index) => (
-            <th key={index} data-slot="grid-header-cell">
+            <th key={index} role="grid-header-cell" className={classNames.gridHeadCell}>
               <span>{day}</span>
             </th>
           ))}
         </tr>
       </thead>
-      <tbody key={currentMonth} data-slot="grid-body">
+      <tbody key={currentMonth} className={classNames.gridBody} role="grid-body">
         {bodyContent}
       </tbody>
     </table>

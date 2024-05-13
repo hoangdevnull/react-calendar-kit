@@ -1,5 +1,5 @@
 import React from 'react';
-import { DateInput, TimeInput } from 'calendar-kit';
+import { Calendar, DateInput, TimeInput } from 'calendar-kit';
 
 const Page = () => {
   return (
@@ -26,6 +26,8 @@ const Page = () => {
           }}
           label="Date Input"
         />
+
+        <Calendar className="text-white" visibleMonths={2} />
       </div>
     </div>
   );

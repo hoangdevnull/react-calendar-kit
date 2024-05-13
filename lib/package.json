@@ -27,26 +27,33 @@
   },
   "dependencies": {
     "@internationalized/date": "^3.5.3",
+    "@react-aria/button": "^3.9.4",
+    "@react-aria/calendar": "^3.5.7",
     "@react-aria/datepicker": "^3.10.0",
+    "@react-aria/focus": "^3.17.0",
     "@react-aria/i18n": "^3.11.0",
+    "@react-aria/interactions": "^3.21.2",
+    "@react-aria/utils": "^3.24.0",
+    "@react-stately/calendar": "^3.5.0",
     "@react-stately/datepicker": "^3.9.3",
     "clsx": "^2.1.1"
   },
   "devDependencies": {
+    "@react-types/calendar": "^3.4.5",
     "@react-types/datepicker": "^3.7.3",
     "@types/react": "18.0.15"
   },
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hoangdevnull/calendar-kit.git"
+    "url": "git+https://github.com/HoangDevNull/calendar-kit.git"
   },
   "bugs": {
-    "url": "https://github.com/hoangdevnull/calendar-kit/issues"
+    "url": "https://github.com/HoangDevNull/calendar-kit/issues"
   },
-  "homepage": "https://github.com/hoangdevnull/calendar-kit#readme",
+  "homepage": "https://github.com/HoangDevNull/calendar-kit#readme",
   "author": {
-    "name": "hoangdevnull",
-    "url": "https://github.com/hoangdevnull"
+    "name": "HoangDevNull",
+    "url": "https://github.com/HoangDevNull"
   }
 }

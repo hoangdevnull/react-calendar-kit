@@ -36,11 +36,14 @@
     "@react-aria/utils": "^3.24.0",
     "@react-stately/calendar": "^3.5.0",
     "@react-stately/datepicker": "^3.9.3",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "lodash.debounce": "^4.0.8",
+    "scroll-into-view-if-needed": "^3.1.0"
   },
   "devDependencies": {
     "@react-types/calendar": "^3.4.5",
     "@react-types/datepicker": "^3.7.3",
+    "@react-types/shared": "^3.23.0",
     "@types/react": "18.0.15"
   },
   "sideEffects": false,

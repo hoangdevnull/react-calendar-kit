@@ -12,6 +12,7 @@ export type CalendarClassNames = {
   root?: string;
   container?: string;
   gridWrapper?: string;
+  gridGroup?: string;
   header?: string;
   grid?: string;
   gridHead?: string;
@@ -21,16 +22,58 @@ export type CalendarClassNames = {
   gridBodyRow?: string;
   gridBodyCell?: string;
   cellButton?: string;
+
+  picker?: {
+    root?: string;
+    button?: string;
+    buttonIcon?: string;
+    highlight?: string;
+    list?: string;
+    monthList?: string;
+    yearList?: string;
+    item?: string;
+    monthItem?: string;
+    yearItem?: string;
+  };
 };
 
 export type ContextType<T extends CalendarState | RangeCalendarState> = {
   state: T;
-  visibleMonths: number;
   headerRef?: RefObject<any>;
+  pickerExpanded?: boolean;
+  setPickerExpanded?: (isExpanded: boolean) => void;
+  /**
+   * The style of the weekday labels.
+   */
   weekdayStyle?: AriaCalendarGridProps['weekdayStyle'];
-  isHeaderExpanded?: boolean;
-
+  /**
+   * The number of months grid to display. Max 3 and min 1
+   */
+  visibleMonths?: number;
+  /**
+   * Root className for calendar
+   */
+  className?: string;
+  /**
+   * className for each components in the calendar
+   */
   classNames?: CalendarClassNames;
+  /**
+   * Using month year picker instead on basic label
+   */
+  withPicker?: boolean;
+
+  /**
+   * Lock the calendar height when the calendar picker is open.
+   * Prefer choose minimum height when the calendar picker is not open 
+   * Use pixel unit
+   */
+  pickerHeight?: number;
+
+  /**
+   * Number of empty item to display in the month picker to force list scrollable
+   */
+  pickerEmptyItem?: number;
 };
 
 export const [CalendarProvider, useCalendarContext] = createSafeContext<

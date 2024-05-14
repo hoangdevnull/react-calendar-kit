@@ -17,7 +17,7 @@ export interface CalendarGridProps extends ElementProps<'table'>, CalendarPropsB
 const CalendarGrid = (props: CalendarGridProps) => {
   const { startDate, currentMonth, ...etc } = props;
 
-  const { state, weekdayStyle, isHeaderExpanded, classNames } = useCalendarContext();
+  const { state, weekdayStyle, pickerExpanded: isHeaderExpanded, classNames } = useCalendarContext();
   const { locale } = useLocale();
   const weeksInMonth = getWeeksInMonth(startDate, locale);
 

@@ -20,7 +20,8 @@ import { DateInputSegment, type DateInputSegmentProps } from './date-input-segme
 type TimeInputClassNames = {
   root?: string;
   label?: string;
-  wrapper?: string;
+  container?: string;
+  segmentWrapper?: string;
   segment?: string;
 };
 type TimeInputClasses = keyof TimeInputClassNames;
@@ -32,6 +33,8 @@ export interface TimeInputProps<T extends TimeValue> extends AriaTimeFieldProps<
   createCalendar?: (calendar: SupportedCalendars) => Calendar | null;
   segmentProps?: DateInputSegmentProps;
   formatSegment?: (segments: DateSegment[]) => DateSegment[];
+  startContent?: ReactNode | string;
+  endContent?: ReactNode | string;
   children?: ReactNode | string;
 }
 
@@ -49,6 +52,8 @@ const TimeInput = <T extends TimeValue>(props: TimeInputProps<T>, inputRef: Ref<
     createCalendar: createCalendarProp,
     isInvalid: isInvalidProp,
     segmentProps: { className: segmentClassName = '', style: segmentStyle = {}, ...segmentProps } = {},
+    startContent,
+    endContent,
     children,
     ...etc
   } = props;
@@ -68,27 +73,36 @@ const TimeInput = <T extends TimeValue>(props: TimeInputProps<T>, inputRef: Ref<
 
   const ref = useRef<HTMLDivElement>(null);
   const composedRef = useMergeRefs(ref, inputRef);
-  const { labelProps, fieldProps } = useTimeField(etc, state, ref);
+  const { labelProps, fieldProps, inputProps } = useTimeField(etc, state, ref);
 
   return (
-    <div data-disabled={state.isDisabled} data-invalid={state.isInvalid} className={cn(classNames.root, className)}>
+    <div
+      data-disabled={state.isDisabled}
+      data-invalid={state.isInvalid}
+      className={cn(classNames.root, className)}
+      ref={composedRef}
+    >
       {label ? (
         <label className={cn(classNames.label)} style={styles.label} {...labelProps}>
           {label}
         </label>
       ) : null}
-
-      <div {...fieldProps} ref={composedRef} className={cn(classNames.wrapper)} style={styles.wrapper}>
-        {formatSegment(state.segments).map((segment, i) => (
-          <DateInputSegment
-            key={i}
-            className={cn(classNames.segment, segmentClassName)}
-            style={{ ...styles.segment, ...segmentStyle }}
-            segment={segment}
-            state={state}
-            {...segmentProps}
-          />
-        ))}
+      <div data-disabled={state.isDisabled} data-invalid={state.isInvalid} className={classNames.container}>
+        {startContent}
+        <div {...fieldProps} className={cn(classNames.segmentWrapper)} style={styles.segmentWrapper}>
+          {formatSegment(state.segments).map((segment, i) => (
+            <DateInputSegment
+              key={i}
+              className={cn(classNames.segment, segmentClassName)}
+              style={{ ...styles.segment, ...segmentStyle }}
+              segment={segment}
+              state={state}
+              {...segmentProps}
+            />
+          ))}
+          <input {...inputProps} />
+        </div>
+        {endContent}
         {children}
       </div>
     </div>

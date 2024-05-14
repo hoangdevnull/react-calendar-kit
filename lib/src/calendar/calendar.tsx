@@ -11,24 +11,54 @@ import CalendarRoot from './calendar-root';
 
 interface Props<T extends DateValue> extends AriaCalendarProps<T> {
   createCalendar?: (calendar: SupportedCalendars) => CalendarType | null;
+  /**
+   * The style of the weekday labels.
+   */
   weekdayStyle?: AriaCalendarGridProps['weekdayStyle'];
+  /**
+   * The number of months grid to display. Max 3 and min 1
+   */
   visibleMonths?: number;
+  /**
+   * Root className for calendar
+   */
   className?: string;
+  /**
+   * className for each components in the calendar
+   */
   classNames?: CalendarClassNames;
+  /**
+   * Using month year picker instead on basic label
+   */
+  withPicker?: boolean;
+
+  /**
+   * Lock the calendar height when the calendar picker is open.
+   * Prefer choose minimum height when the calendar picker is not open
+   */
+  pickerHeight?: number;
+
+  /**
+   * Number of empty item to display in the month picker to force list scrollable
+   */
+  pickerEmptyItem?: number;
 }
 
 function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {
   const {
-    minValue,
-    maxValue,
+    minValue = new CalendarDate(1900, 1, 1),
+    maxValue = new CalendarDate(2099, 12, 31),
     className,
     classNames = {},
     visibleMonths: visibleMonthsProp = 1,
     weekdayStyle = 'short',
     createCalendar: createCalendarProp,
+    withPicker = false,
+    pickerHeight = 224,
+    pickerEmptyItem = 3,
   } = props;
   const { locale } = useLocale();
-  const visibleMonths = Math.max(1, Math.min(visibleMonthsProp, 3));
+  const visibleMonths = Math.max(1, Math.min(visibleMonthsProp, 4));
   const visibleDuration = useMemo(() => ({ months: visibleMonths }), [visibleMonths]);
 
   const state = useCalendarState({
@@ -46,7 +76,9 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
   const { calendarProps, prevButtonProps, nextButtonProps, title, errorMessageProps } = useCalendar(props, state);
 
   return (
-    <CalendarProvider value={{ state, visibleMonths, weekdayStyle, classNames }}>
+    <CalendarProvider
+      value={{ state, visibleMonths, weekdayStyle, withPicker, pickerHeight, pickerEmptyItem, classNames }}
+    >
       <CalendarRoot
         ref={ref}
         calendarProps={calendarProps}

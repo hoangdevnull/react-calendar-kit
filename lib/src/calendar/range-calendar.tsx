@@ -1,5 +1,5 @@
 import React, { ElementRef, forwardRef, useMemo, useRef, type ForwardedRef, type ReactElement, type Ref } from 'react';
-import { createCalendar, type Calendar as CalendarType, type DateValue } from '@internationalized/date';
+import { CalendarDate, createCalendar, type Calendar as CalendarType, type DateValue } from '@internationalized/date';
 import { AriaCalendarGridProps, useRangeCalendar } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
 import { useRangeCalendarState } from '@react-stately/calendar';
@@ -20,8 +20,8 @@ interface Props<T extends DateValue> extends AriaRangeCalendarProps<T> {
 
 function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {
   const {
-    minValue,
-    maxValue,
+    minValue = new CalendarDate(1900, 1, 1),
+    maxValue = new CalendarDate(2099, 12, 31),
     className,
     classNames = {},
     visibleMonths: visibleMonthsProp = 1,
@@ -55,7 +55,7 @@ function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<H
   const mergedRef = useMergeRefs(domRef, ref);
 
   return (
-    <CalendarProvider value={{ state, visibleMonths, weekdayStyle, classNames }}>
+    <CalendarProvider value={{ state, visibleMonths, weekdayStyle, withPicker: false, classNames }}>
       <CalendarRoot
         ref={mergedRef}
         calendarProps={calendarProps}

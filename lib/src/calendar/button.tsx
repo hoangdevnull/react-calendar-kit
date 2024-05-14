@@ -1,7 +1,8 @@
 import React, { ElementRef, forwardRef, useRef } from 'react';
-import { useButton, type AriaButtonProps } from '@react-aria/button';
+import { AriaButtonProps, useButton } from '@react-aria/button';
 import { useFocusRing } from '@react-aria/focus';
-import { mergeProps } from '@react-aria/utils';
+import { useHover } from '@react-aria/interactions';
+import { filterDOMProps, mergeProps } from '@react-aria/utils';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
 import { ElementProps } from '../types/common.types';
@@ -10,25 +11,38 @@ import { withAttr } from '../utils';
 export interface ButtonProps extends AriaButtonProps, ElementProps<'button', keyof AriaButtonProps> {}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, buttonRef) => {
+  const { children, autoFocus, isDisabled, onKeyDown, ...otherProps } = props;
   const ref = useRef<ElementRef<'button'>>(null);
-  const { buttonProps, isPressed } = useButton(props, ref);
-  const { focusProps, isFocusVisible } = useFocusRing();
 
-  const mergeRef = useMergeRefs(ref, buttonRef);
+  const { buttonProps, isPressed } = useButton(
+    {
+      elementType: 'button',
+      isDisabled,
+      onKeyDown,
+      ...otherProps,
+    } as AriaButtonProps,
+    ref
+  );
+  const mergedRef = useMergeRefs(ref, buttonRef);
+  const { isFocusVisible, isFocused, focusProps } = useFocusRing({ autoFocus });
+  const { isHovered, hoverProps } = useHover({ isDisabled });
 
   return (
     <button
-      ref={mergeRef}
+      ref={mergedRef}
+      data-disabled={withAttr(isDisabled)}
+      data-focus={withAttr(isFocused)}
+      data-focus-visible={withAttr(isFocusVisible)}
+      data-hover={withAttr(isHovered)}
       data-pressed={withAttr(isPressed)}
-      data-focus={withAttr(isFocusVisible)}
       className={props.className}
-      {...mergeProps(buttonProps, focusProps)}
+      {...mergeProps(focusProps, hoverProps, buttonProps, filterDOMProps(otherProps))}
     >
-      {props.children}
+      {children}
     </button>
   );
 });
 
-Button.displayName = 'NextUI.Button';
+Button.displayName = 'Button';
 
 export default Button;

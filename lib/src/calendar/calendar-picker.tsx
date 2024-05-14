@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce';
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 
 import { ElementProps } from '../types/common.types';
-import { cn, getMonthRange, getYearRange } from '../utils';
+import { cn, getMonthRange, getYearRange, mergeStyles } from '../utils';
 import Button from './button';
 import { useCalendarContext } from './calendar-context';
 
@@ -39,15 +39,10 @@ interface Props extends ElementProps<'div'> {
 }
 
 const CalendarPicker = (props: Props) => {
-  const { date, currentMonth, className, ...etc } = props;
+  const { date, currentMonth, className, style, ...etc } = props;
 
-  const {
-    state,
-    pickerExpanded: isHeaderExpanded,
-    headerRef,
-    setPickerExpanded: setIsHeaderExpanded,
-    classNames,
-  } = useCalendarContext();
+  const { state, isPickerExpanded, headerRef, setPickerExpanded, pickerEmptyItem, classNames, styles } =
+    useCalendarContext();
 
   const highlightRef = useRef<ElementRef<'div'>>(null);
   const yearsListRef = useRef<ElementRef<'div'>>(null);
@@ -124,14 +119,14 @@ const CalendarPicker = (props: Props) => {
 
       state.setFocusedDate(date);
     },
-    [state, isHeaderExpanded]
+    [state, isPickerExpanded]
   );
 
   // scroll to the selected month/year when the component is mounted/opened/closed
   useEffect(() => {
     scrollIntoView(date.month, 'months', false);
     scrollIntoView(date.year, 'years', false);
-  }, [isHeaderExpanded]);
+  }, [isPickerExpanded]);
 
   useEffect(() => {
     // add scroll event listener to monthsListRef
@@ -223,7 +218,7 @@ const CalendarPicker = (props: Props) => {
         case 'Escape':
         case 'Enter':
         case ' ':
-          setIsHeaderExpanded?.(false);
+          setPickerExpanded?.(false);
           headerRef?.current?.focus();
           return;
       }
@@ -237,57 +232,78 @@ const CalendarPicker = (props: Props) => {
     <div
       {...etc}
       className={cn(classNames?.picker?.root, className)}
+      style={mergeStyles(style, styles?.picker?.root)}
       role="picker-root"
-      data-expanded={isHeaderExpanded}
+      data-expanded={isPickerExpanded}
       // makes the browser ignore the element and its children when tabbing
       // @ts-ignore
-      inert={isHeaderExpanded ? true : undefined}
+      inert={isPickerExpanded ? true : undefined}
     >
-      <div ref={highlightRef} className={classNames?.picker?.highlight} role="picker-highlight" />
+      <div
+        ref={highlightRef}
+        className={classNames?.picker?.highlight}
+        style={styles?.picker?.highlight}
+        role="picker-highlight"
+      />
       <div
         ref={monthsListRef}
         className={cn(classNames?.picker?.list, classNames?.picker?.monthList)}
+        style={mergeStyles(styles?.picker?.list, styles?.picker?.monthList)}
         role="picker-month-list"
       >
         <>
-          <EmptySlot className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)} />
+          <EmptySlot
+            total={pickerEmptyItem}
+            className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)}
+            style={mergeStyles(styles?.picker?.item, styles?.picker?.monthItem)}
+          />
           {months.map((month) => (
             <Button
               key={`picker-month-${month.value}`}
               ref={(node) => getItemRef(node, month.value, 'months')}
               className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)}
+              style={mergeStyles(styles?.picker?.item, styles?.picker?.monthItem)}
               data-value={month.value}
-              tabIndex={!isHeaderExpanded || state.focusedDate?.month !== month.value ? -1 : 0}
+              tabIndex={!isPickerExpanded || state.focusedDate?.month !== month.value ? -1 : 0}
               onKeyDown={(e) => onPickerItemKeyDown(e, month.value, 'months')}
               onPress={(e) => onPickerItemPressed(e, 'months')}
             >
               {month.label}
             </Button>
           ))}
-          <EmptySlot className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)} />
+          <EmptySlot total={pickerEmptyItem} className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)} />
         </>
       </div>
       <div
         ref={yearsListRef}
         className={cn(classNames?.picker?.list, classNames?.picker?.yearList)}
+        style={mergeStyles(styles?.picker?.list, styles?.picker?.yearList)}
         role="picker-year-list"
       >
         <>
-          <EmptySlot className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)} />
+          <EmptySlot
+            total={pickerEmptyItem}
+            className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
+            style={mergeStyles(styles?.picker?.item, styles?.picker?.yearItem)}
+          />
           {years.map((year) => (
             <Button
               key={`picker-year-${year.value}`}
               ref={(node) => getItemRef(node, year.value, 'years')}
               className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
               data-value={year.value}
-              tabIndex={!isHeaderExpanded || state.focusedDate?.year !== year.value ? -1 : 0}
+              tabIndex={!isPickerExpanded || state.focusedDate?.year !== year.value ? -1 : 0}
               onKeyDown={(e) => onPickerItemKeyDown(e, year.value, 'years')}
               onPress={(e) => onPickerItemPressed(e, 'years')}
             >
               {year.label}
             </Button>
           ))}
-          <EmptySlot className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)} />
+          <EmptySlot
+            total={pickerEmptyItem}
+            className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
+            style={mergeStyles(styles?.picker?.item, styles?.picker?.yearItem)}
+          />
         </>
       </div>
     </div>
@@ -296,11 +312,11 @@ const CalendarPicker = (props: Props) => {
 
 export default CalendarPicker;
 
-const EmptySlot = ({ className, ...props }: ElementProps<'div'>) => {
+const EmptySlot = ({ className, total, ...props }: ElementProps<'div'> & { total: number }) => {
   return (
     <>
-      {Array.from({ length: 3 }, (_, i) => (
-        <div key={i} aria-hidden="true" className={className} data-slot="picker-item-empty" tabIndex={-1} {...props}>
+      {Array.from({ length: total }, (_, i) => (
+        <div key={i} aria-hidden="true" className={className} role="picker-item-empty" tabIndex={-1} {...props}>
           &nbsp;
         </div>
       ))}

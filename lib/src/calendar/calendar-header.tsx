@@ -3,9 +3,9 @@ import { CalendarDate } from '@internationalized/date';
 import { useDateFormatter } from '@react-aria/i18n';
 
 import { ElementProps } from '../types/common.types';
+import { withAttr } from '../utils';
 import Button from './button';
 import { useCalendarContext } from './calendar-context';
-import CalendarPicker from './calendar-picker';
 import ChevronDownIcon from './chevron-down-icon';
 
 export interface CalendarHeaderProps extends ElementProps<'div'> {
@@ -16,7 +16,8 @@ export interface CalendarHeaderProps extends ElementProps<'div'> {
 const CalendarHeader = (props: CalendarHeaderProps) => {
   const { date, currentMonth } = props;
 
-  const { state, headerRef, withPicker, classNames, setPickerExpanded } = useCalendarContext();
+  const { state, headerRef, withPicker, classNames, styles, isPickerExpanded, setPickerExpanded } =
+    useCalendarContext();
 
   const monthAndYearDateFormatter = useDateFormatter({
     month: 'long',
@@ -30,11 +31,9 @@ const CalendarHeader = (props: CalendarHeaderProps) => {
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      // Escape key
       if (e.key === 'Escape') {
         e.preventDefault();
         e.stopPropagation();
-        // Close the month and year pickers
         setPickerExpanded?.(false);
       }
     },
@@ -42,16 +41,29 @@ const CalendarHeader = (props: CalendarHeaderProps) => {
   );
 
   return withPicker ? (
-    <div className={classNames.month} ref={headerRef}>
-      <Button onKeyDown={handleKeyDown} className={classNames?.picker?.button} ref={headerRef}>
+    <div className={classNames.month} style={styles?.month} ref={headerRef}>
+      <Button
+        onPress={() => setPickerExpanded(!isPickerExpanded)}
+        onKeyDown={handleKeyDown}
+        className={classNames?.picker?.button}
+        style={styles?.picker?.button}
+        ref={headerRef}
+        data-expanded={withAttr(isPickerExpanded)}
+      >
         <span key={currentMonth.month} aria-hidden={true}>
           {monthDateContent}
         </span>
-        {<ChevronDownIcon role="chevron-down" className={classNames?.picker?.buttonIcon} />}
+        {
+          <ChevronDownIcon
+            role="chevron-down"
+            className={classNames?.picker?.buttonIcon}
+            style={styles?.picker?.buttonIcon}
+          />
+        }
       </Button>
     </div>
   ) : (
-    <div className={classNames.month} ref={headerRef}>
+    <div className={classNames.month} style={styles?.month} ref={headerRef}>
       <span key={currentMonth.month} aria-hidden={true}>
         {monthDateContent}
       </span>

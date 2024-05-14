@@ -9,16 +9,24 @@ import { CalendarState, RangeCalendarState } from '@react-stately/calendar';
 
 import { ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
-import { CalendarClassNames } from './calendar-context';
+import { CalendarClassNames, CalendarStyles } from './calendar-context';
 
 export interface CalendarCellProps extends ElementProps<'td'>, AriaCalendarCellProps {
   state: CalendarState | RangeCalendarState;
   isPickerVisible?: boolean;
   currentMonth: CalendarDate;
   classNames?: CalendarClassNames;
+  styles?: CalendarStyles;
 }
 
-export function CalendarCell({ isPickerVisible, classNames, state, currentMonth, ...props }: CalendarCellProps) {
+export function CalendarCell({
+  isPickerVisible,
+  classNames,
+  styles,
+  state,
+  currentMonth,
+  ...props
+}: CalendarCellProps) {
   const { locale } = useLocale();
 
   const ref = useRef<HTMLButtonElement>(null);
@@ -59,6 +67,7 @@ export function CalendarCell({ isPickerVisible, classNames, state, currentMonth,
       <span
         {...mergeProps(buttonProps, hoverProps, focusProps)}
         className={classNames.cellButton}
+        style={styles?.cellButton}
         ref={ref}
         role="button"
         data-disabled={withAttr(isDisabled && !isInvalid)}

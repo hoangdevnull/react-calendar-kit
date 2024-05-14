@@ -5,8 +5,9 @@ import { useLocale } from '@react-aria/i18n';
 import { useCalendarState } from '@react-stately/calendar';
 import { AriaCalendarProps } from '@react-types/calendar';
 
+import { useControllableState } from '../hooks/useControlableState';
 import { SupportedCalendars } from '../types/common.types';
-import { CalendarClassNames, CalendarProvider } from './calendar-context';
+import { CalendarClassNames, CalendarProvider, CalendarStyles } from './calendar-context';
 import CalendarRoot from './calendar-root';
 
 interface Props<T extends DateValue> extends AriaCalendarProps<T> {
@@ -27,6 +28,11 @@ interface Props<T extends DateValue> extends AriaCalendarProps<T> {
    * className for each components in the calendar
    */
   classNames?: CalendarClassNames;
+
+  /**
+   * styles for each components in the calendar
+   */
+  styles?: CalendarStyles;
   /**
    * Using month year picker instead on basic label
    */
@@ -42,6 +48,19 @@ interface Props<T extends DateValue> extends AriaCalendarProps<T> {
    * Number of empty item to display in the month picker to force list scrollable
    */
   pickerEmptyItem?: number;
+
+  /**
+   * Open the calendar picker for default - uncontrolled style
+   */
+  defaultPickerOpen?: boolean;
+  /**
+   * Open the calendar picker controlled style
+   */
+  pickerOpen?: boolean;
+  /**
+   * Trigger when pickerOpen State Change
+   */
+  onPickerOpenChange?: (open: boolean) => void;
 }
 
 function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {
@@ -50,13 +69,18 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
     maxValue = new CalendarDate(2099, 12, 31),
     className,
     classNames = {},
+    styles = {} as CalendarStyles,
     visibleMonths: visibleMonthsProp = 1,
     weekdayStyle = 'short',
     createCalendar: createCalendarProp,
     withPicker = false,
-    pickerHeight = 224,
-    pickerEmptyItem = 3,
+    pickerHeight = 287,
+    pickerEmptyItem = 4,
+    pickerOpen,
+    defaultPickerOpen = false,
+    onPickerOpenChange,
   } = props;
+
   const { locale } = useLocale();
   const visibleMonths = Math.max(1, Math.min(visibleMonthsProp, 4));
   const visibleDuration = useMemo(() => ({ months: visibleMonths }), [visibleMonths]);
@@ -73,11 +97,28 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
         : (createCalendarProp as typeof createCalendar),
   });
 
+  const [isPickerExpanded, setPickerExpanded] = useControllableState({
+    prop: pickerOpen,
+    defaultProp: defaultPickerOpen,
+    onChange: onPickerOpenChange,
+  });
+
   const { calendarProps, prevButtonProps, nextButtonProps, title, errorMessageProps } = useCalendar(props, state);
 
   return (
     <CalendarProvider
-      value={{ state, visibleMonths, weekdayStyle, withPicker, pickerHeight, pickerEmptyItem, classNames }}
+      value={{
+        state,
+        visibleMonths,
+        weekdayStyle,
+        withPicker,
+        pickerHeight,
+        pickerEmptyItem,
+        isPickerExpanded,
+        setPickerExpanded,
+        classNames,
+        styles,
+      }}
     >
       <CalendarRoot
         ref={ref}

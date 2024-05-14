@@ -2,7 +2,7 @@ import React, { ForwardedRef, forwardRef, Fragment, useMemo } from 'react';
 import { CalendarAria } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
 
-import { cn } from '../utils';
+import { cn, mergeStyles } from '../utils';
 import Button from './button';
 import { useCalendarContext } from './calendar-context';
 import CalendarGrid from './calendar-grid';
@@ -18,11 +18,10 @@ interface Props extends CalendarAria {
 const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>) => {
   const { calendarProps, className, prevButtonProps, nextButtonProps } = props;
 
-  const { state, visibleMonths, classNames, withPicker, pickerHeight, pickerExpanded } = useCalendarContext();
+  const { state, visibleMonths, classNames, withPicker, pickerHeight, isPickerExpanded, styles } = useCalendarContext();
 
   const currentMonth = state.visibleRange.start;
   const { direction: rtlDirection } = useLocale();
-
   const isRtl = rtlDirection === 'rtl';
 
   const content = useMemo(() => {
@@ -75,13 +74,30 @@ const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>
   return (
     <div
       {...calendarProps}
-      style={{ '--picker-height': `${pickerHeight}px`, ...calendarProps.style } as React.CSSProperties}
+      style={mergeStyles(
+        { '--picker-height': `${pickerHeight}px` } as React.CSSProperties,
+        calendarProps?.style,
+        styles?.root
+      )}
       className={cn(className, classNames.root)}
       ref={ref}
     >
-      <div className={classNames.container}>
-        <div className={classNames.header}>{content.headers}</div>
-        <div className={classNames.gridWrapper}>{content.calendars}</div>
+      <div className={classNames.container} style={styles?.container}>
+        <div className={classNames.header} style={styles?.header}>
+          {content.headers}
+        </div>
+        <div
+          className={classNames.gridWrapper}
+          // * Lock the grid height when the picker is expanded
+          style={mergeStyles(
+            withPicker && isPickerExpanded
+              ? { minHeight: 'var(--picker-height)', maxHeight: 'var(--picker-height)', overflowY: 'hidden' }
+              : {},
+            styles?.gridWrapper
+          )}
+        >
+          {content.calendars}
+        </div>
       </div>
     </div>
   );

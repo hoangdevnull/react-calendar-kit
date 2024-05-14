@@ -55,7 +55,17 @@ function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<H
   const mergedRef = useMergeRefs(domRef, ref);
 
   return (
-    <CalendarProvider value={{ state, visibleMonths, weekdayStyle, withPicker: false, classNames }}>
+    <CalendarProvider
+      value={{
+        state,
+        visibleMonths,
+        weekdayStyle,
+        classNames,
+        withPicker: false,
+        isPickerExpanded: false,
+        setPickerExpanded: () => null,
+      }}
+    >
       <CalendarRoot
         ref={mergedRef}
         calendarProps={calendarProps}
@@ -69,7 +79,7 @@ function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<H
   );
 }
 
-RangeCalendar.displayName = 'Calendar';
+RangeCalendar.displayName = 'RangeCalendar';
 
 export type RangeCalendarProps<T extends DateValue = DateValue> = Props<T> & { ref?: Ref<HTMLElement> };
 export default forwardRef(RangeCalendar) as <T extends DateValue>(props: RangeCalendarProps<T>) => ReactElement;

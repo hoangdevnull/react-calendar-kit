@@ -42,3 +42,17 @@ export function getMonthRange(year: DateValue) {
 
     return months;
 }
+
+
+/**
+ * Merges multiple CSS properties objects into one.
+ * Filters out any undefined or null values before merging.
+ * @param styles An array of React.CSSProperties objects or undefined.
+ * @returns A single merged React.CSSProperties object.
+ */
+export function mergeStyles(...styles: (React.CSSProperties | undefined | null)[]): React.CSSProperties {
+    return styles?.reduce<React.CSSProperties>((acc, style) => {
+        // Filter out falsy values to avoid unnecessary spread of undefined/null
+        return style ? { ...acc, ...style } : acc;
+    }, {}) ?? {};
+}

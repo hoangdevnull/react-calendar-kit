@@ -5,7 +5,7 @@ import { useLocale } from '@react-aria/i18n';
 import { CalendarPropsBase } from '@react-types/calendar';
 
 import { ElementProps } from '../types/common.types';
-import { cn, withAttr } from '../utils';
+import { cn, mergeStyles, withAttr } from '../utils';
 import { CalendarCell } from './calendar-cell';
 import { useCalendarContext } from './calendar-context';
 
@@ -17,7 +17,7 @@ export interface CalendarGridProps extends ElementProps<'table'>, CalendarPropsB
 const CalendarGrid = (props: CalendarGridProps) => {
   const { startDate, currentMonth, ...etc } = props;
 
-  const { state, weekdayStyle, pickerExpanded: isHeaderExpanded, classNames } = useCalendarContext();
+  const { state, weekdayStyle, isPickerExpanded: isHeaderExpanded, classNames, styles } = useCalendarContext();
   const { locale } = useLocale();
   const weeksInMonth = getWeeksInMonth(startDate, locale);
 
@@ -49,6 +49,7 @@ const CalendarGrid = (props: CalendarGridProps) => {
               date={date}
               isPickerVisible={isHeaderExpanded}
               classNames={classNames}
+              styles={styles}
             />
           ) : (
             <td key={i} />
@@ -65,16 +66,21 @@ const CalendarGrid = (props: CalendarGridProps) => {
       aria-hidden={withAttr(isHeaderExpanded)}
       tabIndex={-1}
     >
-      <thead {...headerProps} className={cn(classNames.gridHead, headerProps.className)} role="grid-header">
-        <tr className={classNames.gridHeadRow} role="grid-header-row">
+      <thead
+        {...headerProps}
+        className={cn(classNames.gridHead, headerProps.className)}
+        style={mergeStyles(headerProps.style, styles?.gridHead)}
+        role="grid-header"
+      >
+        <tr className={classNames.gridHeadRow} style={styles?.gridHeadRow} role="grid-header-row">
           {weekDays.map((day, index) => (
-            <th key={index} role="grid-header-cell" className={classNames.gridHeadCell}>
+            <th key={index} role="grid-header-cell" className={classNames.gridHeadCell} style={styles?.gridHeadCell}>
               <span>{day}</span>
             </th>
           ))}
         </tr>
       </thead>
-      <tbody key={currentMonth} className={classNames.gridBody} role="grid-body">
+      <tbody key={currentMonth} className={classNames.gridBody} style={styles?.gridBody} role="grid-body">
         {bodyContent}
       </tbody>
     </table>

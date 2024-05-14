@@ -7,14 +7,14 @@ import React, {
   type ReactElement,
   type Ref,
 } from 'react';
-import { createCalendar, type Calendar } from '@internationalized/date';
+import { type Calendar } from '@internationalized/date';
 import { useTimeField, type AriaTimeFieldProps, type TimeValue } from '@react-aria/datepicker';
 import { useLocale } from '@react-aria/i18n';
 import { DateSegment, useTimeFieldState } from '@react-stately/datepicker';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
 import { SupportedCalendars } from '../types/common.types';
-import { cn } from '../utils';
+import { cn, mergeStyles } from '../utils';
 import { DateInputSegment, type DateInputSegmentProps } from './date-input-segment';
 
 type TimeInputClassNames = {
@@ -83,18 +83,18 @@ const TimeInput = <T extends TimeValue>(props: TimeInputProps<T>, inputRef: Ref<
       ref={composedRef}
     >
       {label ? (
-        <label className={cn(classNames.label)} style={styles.label} {...labelProps}>
+        <label className={cn(classNames.label)} style={styles?.label} {...labelProps}>
           {label}
         </label>
       ) : null}
       <div data-disabled={state.isDisabled} data-invalid={state.isInvalid} className={classNames.container}>
         {startContent}
-        <div {...fieldProps} className={cn(classNames.segmentWrapper)} style={styles.segmentWrapper}>
+        <div {...fieldProps} className={cn(classNames.segmentWrapper)} style={styles?.segmentWrapper}>
           {formatSegment(state.segments).map((segment, i) => (
             <DateInputSegment
               key={i}
               className={cn(classNames.segment, segmentClassName)}
-              style={{ ...styles.segment, ...segmentStyle }}
+              style={mergeStyles(styles?.segment, segmentStyle)}
               segment={segment}
               state={state}
               {...segmentProps}

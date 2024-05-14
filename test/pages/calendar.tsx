@@ -16,7 +16,7 @@ const Page = () => {
             classNames={{
               root: 'bg-gray-950 rounded-lg w-fit',
               gridWrapper: 'flex justify-between',
-              gridGroup: 'relative w-full h-full',
+              gridGroup: 'relative w-full h-full py-4',
               header: 'relative p-4 flex items-center justify-between gap-2  [&_.chevron-icon]:flex-none',
               nav: 'min-w-10 aspect-square h-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-800 absolute top-1/2 -translate-y-1/2',
               nextButton: 'right-3',
@@ -48,9 +48,15 @@ const Page = () => {
               ]),
 
               picker: {
-                root: 'absolute inset-x-0 top-0 flex w-full h-[var(--picker-height)] justify-center opacity-100 pointer-events-auto z-20 transition-opacity !duration-250 bg-gray-950',
+                root: cn([
+                  'absolute inset-x-0 top-0 flex w-full h-[var(--picker-height)] justify-center z-20 transition-opacity !duration-250 bg-gray-950 rounded-lg',
+                  // Opened state
+                  'data-[expanded=true]:pointer-events-auto data-[expanded=true]:opacity-100 opacity-0 pointer-events-none',
+                ]),
+
                 button:
-                  'flex justify-between items-center gap-2 px-4 py-2 bg-gray-900 rounded-full shadow-sm outline-none data-[pressed=true]:scale-90 scale-100 transition-transform !duration-250',
+                  'flex justify-between items-center gap-2 px-4 py-2 bg-gray-900 rounded-full shadow-sm outline-none data-[pressed=true]:scale-90 scale-100 transition-transform !duration-250 group',
+                buttonIcon: 'group-data-[expanded=true]:rotate-180 transition-transform duration-250',
                 highlight:
                   'h-8 bg-gray-600 absolute w-[calc(100%_-_16px)] rounded-md z-0 top-1/2 -translate-y-1/2 pointer-events-none',
                 list: cn(

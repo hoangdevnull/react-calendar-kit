@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { CSSProperties, RefObject } from 'react';
 import { AriaCalendarGridProps } from '@react-aria/calendar';
 import type { CalendarState, RangeCalendarState } from '@react-stately/calendar';
 
@@ -37,11 +37,18 @@ export type CalendarClassNames = {
   };
 };
 
+type BaseClassKeys = Exclude<keyof CalendarClassNames, 'picker'>;
+
+export type CalendarStyles = Partial<
+  Record<BaseClassKeys, CSSProperties> & {
+    picker?: Record<keyof CalendarClassNames['picker'], CSSProperties>;
+  }
+>;
 export type ContextType<T extends CalendarState | RangeCalendarState> = {
   state: T;
   headerRef?: RefObject<any>;
-  pickerExpanded?: boolean;
-  setPickerExpanded?: (isExpanded: boolean) => void;
+  isPickerExpanded: boolean;
+  setPickerExpanded: (isExpanded: boolean) => void;
   /**
    * The style of the weekday labels.
    */
@@ -58,6 +65,11 @@ export type ContextType<T extends CalendarState | RangeCalendarState> = {
    * className for each components in the calendar
    */
   classNames?: CalendarClassNames;
+
+  /**
+   * styles for each components in the calendar
+   */
+  styles?: CalendarStyles;
   /**
    * Using month year picker instead on basic label
    */
@@ -65,7 +77,7 @@ export type ContextType<T extends CalendarState | RangeCalendarState> = {
 
   /**
    * Lock the calendar height when the calendar picker is open.
-   * Prefer choose minimum height when the calendar picker is not open 
+   * Prefer choose minimum height when the calendar picker is not open
    * Use pixel unit
    */
   pickerHeight?: number;

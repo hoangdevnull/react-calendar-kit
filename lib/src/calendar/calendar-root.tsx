@@ -7,9 +7,9 @@ import Button from './button';
 import { useCalendarContext } from './calendar-context';
 import CalendarGrid from './calendar-grid';
 import CalendarHeader from './calendar-header';
-import CalendarPicker from './calendar-picker';
-import ChevronLeftIcon from './chevron-left-icon';
-import ChevronRightIcon from './chevron-right-icon';
+import CalendarPicker from './picker/calendar-picker';
+import ChevronLeftIcon from './icons/chevron-left-icon';
+import ChevronRightIcon from './icons/chevron-right-icon';
 
 interface Props extends CalendarAria {
   className?: string;

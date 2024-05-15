@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 
 type RefMap<T extends HTMLElement> = Map<number, T>;
 
-const useListRefs = <T extends HTMLElement,>() => {
-  const trackingRefs = useRef<RefMap<T>>();
+const useListRefs = <T extends HTMLElement,>(): [(node: T, key: number) => void, () => RefMap<T>] => {
+  const trackingRefs = useRef<RefMap<T>>(new Map());
 
   function getRefs() {
     if (!trackingRefs.current) {
@@ -14,11 +14,11 @@ const useListRefs = <T extends HTMLElement,>() => {
   }
 
 
-  function bindRefs(node: T | null, value: number) {
+  function bindRefs(node: T | null, key: number) {
     if (node) {
-      trackingRefs.current.set(value, node);
+      trackingRefs.current.set(key, node);
     } else {
-      trackingRefs.current.delete(value);
+      trackingRefs.current.delete(key);
     }
   }
 

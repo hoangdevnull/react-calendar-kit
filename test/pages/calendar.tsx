@@ -133,7 +133,7 @@ const Page = () => {
                 ]),
               }}
               className="text-white"
-              visibleMonths={3}
+              visibleMonths={1}
               weekdayStyle="short"
             />
           </div>

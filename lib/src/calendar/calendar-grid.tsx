@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { CalendarDate, endOfMonth, getWeeksInMonth } from '@internationalized/date';
 import { useCalendarGrid } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
@@ -31,7 +31,12 @@ const CalendarGrid = (props: CalendarGridProps) => {
   );
 
   const bodyContent = [...new Array(weeksInMonth).keys()].map((weekIndex) => (
-    <tr role="grid-body-row" className={classNames.gridBodyRow} key={weekIndex} data-picker-expanded={withAttr(isHeaderExpanded)}>
+    <tr
+      role="grid-body-row"
+      className={classNames.gridBodyRow}
+      key={weekIndex}
+      data-picker-expanded={withAttr(isHeaderExpanded)}
+    >
       {state
         .getDatesInWeek(weekIndex, startDate)
         .map((date, i) =>

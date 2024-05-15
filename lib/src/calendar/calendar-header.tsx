@@ -6,7 +6,7 @@ import { ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
 import Button from './button';
 import { useCalendarContext } from './calendar-context';
-import ChevronDownIcon from './chevron-down-icon';
+import ChevronDownIcon from './icons/chevron-down-icon';
 
 export interface CalendarHeaderProps extends ElementProps<'div'> {
   date: CalendarDate;

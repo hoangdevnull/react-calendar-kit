@@ -1,24 +1,18 @@
-import React, {
-  CSSProperties,
-  forwardRef,
-  ReactNode,
-  useRef,
-  type ElementRef,
-  type ReactElement,
-  type Ref,
-} from 'react';
+import React, { CSSProperties, forwardRef, useRef, type ElementRef, type ReactElement, type Ref } from 'react';
 import { CalendarDate, createCalendar, type Calendar } from '@internationalized/date';
 import { useDateField, type AriaDateFieldProps, type DateValue } from '@react-aria/datepicker';
 import { useLocale } from '@react-aria/i18n';
-import { DateSegment, useDateFieldState } from '@react-stately/datepicker';
+import { filterDOMProps, mergeProps } from '@react-aria/utils';
+import { useDateFieldState } from '@react-stately/datepicker';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
 import { SupportedCalendars } from '../types/common.types';
-import { cn, mergeStyles } from '../utils';
-import { DateInputSegment, type DateInputSegmentProps } from './date-input-segment';
+import DateField, { DateFieldProps } from './date-field';
+import DateInputGroup, { DateInputGroupProps } from './date-input-group';
 
 type DateInputClassNames = {
   root?: string;
+  group?: string;
   label?: string;
   container?: string;
   segmentWrapper?: string;
@@ -26,32 +20,35 @@ type DateInputClassNames = {
 };
 type DateInputClasses = keyof DateInputClassNames;
 type DateInputStyles = Record<DateInputClasses, CSSProperties>;
-export interface DateInputProps<T extends DateValue> extends AriaDateFieldProps<T> {
+
+export interface DateInputProps<T extends DateValue>
+  extends AriaDateFieldProps<T>,
+    Pick<DateFieldProps, 'inputProps' | 'fieldProps' | 'segmentProps' | 'formatSegment'>,
+    Pick<DateInputGroupProps, 'children' | 'startContent' | 'endContent' | 'labelProps' | 'groupProps'> {
   className?: string;
   classNames?: DateInputClassNames;
   styles?: DateInputStyles;
+  style?: CSSProperties;
   createCalendar?: (calendar: SupportedCalendars) => Calendar | null;
-  segmentProps?: DateInputSegmentProps;
-  formatSegment?: (segments: DateSegment[]) => DateSegment[];
-  startContent?: ReactNode | string;
-  endContent?: ReactNode | string;
-  children?: ReactNode | string;
 }
 
 const DateInput = <T extends DateValue>(props: DateInputProps<T>, inputRef: Ref<ElementRef<'div'>>) => {
   const {
+    groupProps: groupPropsProp = {},
+    labelProps: labelPropsProp = {},
+    inputProps: inputPropsProp = {},
+    fieldProps: fieldPropsProp = {},
     className,
     classNames = {},
     styles = {} as DateInputStyles,
+    style,
     label,
-    formatSegment = (segments) => segments,
-    validationBehavior,
     shouldForceLeadingZeros = true,
     minValue = new CalendarDate(1900, 1, 1),
     maxValue = new CalendarDate(2099, 12, 31),
     createCalendar: createCalendarProp,
-    isInvalid: isInvalidProp,
-    segmentProps: { className: segmentClassName = '', style: segmentStyle = {}, ...segmentProps } = {},
+    segmentProps,
+    formatSegment,
     startContent,
     endContent,
     children,
@@ -66,8 +63,6 @@ const DateInput = <T extends DateValue>(props: DateInputProps<T>, inputRef: Ref<
     locale,
     minValue,
     maxValue,
-    validationBehavior,
-    isInvalid: isInvalidProp,
     shouldForceLeadingZeros,
     createCalendar:
       !createCalendarProp || typeof createCalendarProp !== 'function'
@@ -77,39 +72,34 @@ const DateInput = <T extends DateValue>(props: DateInputProps<T>, inputRef: Ref<
 
   const ref = useRef<HTMLDivElement>(null);
   const composedRef = useMergeRefs(ref, inputRef);
-  const { labelProps, fieldProps, inputProps } = useDateField(etc, state, ref);
+  const { labelProps, fieldProps, inputProps } = useDateField({ ...props, label, shouldForceLeadingZeros }, state, ref);
 
   return (
-    <div
+    <DateInputGroup
       data-disabled={state.isDisabled}
       data-invalid={state.isInvalid}
-      className={cn(classNames.root, className)}
+      className={className}
+      classNames={classNames}
+      styles={styles}
+      style={style}
       ref={composedRef}
+      label={label}
+      labelProps={mergeProps(labelProps, labelPropsProp)}
+      startContent={startContent}
+      endContent={endContent}
+      {...filterDOMProps(etc)}
     >
-      {label ? (
-        <label className={cn(classNames.label)} style={styles?.label} {...labelProps}>
-          {label}
-        </label>
-      ) : null}
-      <div data-disabled={state.isDisabled} data-invalid={state.isInvalid} className={classNames.container}>
-        {startContent}
-        <div {...fieldProps} className={cn(classNames.segmentWrapper)} style={styles?.segmentWrapper}>
-          {formatSegment(state.segments).map((segment, i) => (
-            <DateInputSegment
-              key={i}
-              className={cn(classNames.segment, segmentClassName)}
-              style={mergeStyles(styles?.segment, segmentStyle)}
-              segment={segment}
-              state={state}
-              {...segmentProps}
-            />
-          ))}
-          <input {...inputProps} />
-        </div>
-        {endContent}
-        {children}
-      </div>
-    </div>
+      <DateField
+        fieldProps={mergeProps(fieldProps, fieldPropsProp)}
+        inputProps={mergeProps(inputProps, inputPropsProp)}
+        state={state}
+        classNames={classNames}
+        segmentProps={segmentProps}
+        formatSegment={formatSegment}
+        styles={styles}
+      />
+      {children}
+    </DateInputGroup>
   );
 };
 

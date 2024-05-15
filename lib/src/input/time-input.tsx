@@ -1,57 +1,52 @@
-import React, {
-  CSSProperties,
-  forwardRef,
-  ReactNode,
-  useRef,
-  type ElementRef,
-  type ReactElement,
-  type Ref,
-} from 'react';
+import React, { CSSProperties, forwardRef, useRef, type ElementRef, type ReactElement, type Ref } from 'react';
 import { type Calendar } from '@internationalized/date';
 import { useTimeField, type AriaTimeFieldProps, type TimeValue } from '@react-aria/datepicker';
 import { useLocale } from '@react-aria/i18n';
-import { DateSegment, useTimeFieldState } from '@react-stately/datepicker';
+import { filterDOMProps, mergeProps } from '@react-aria/utils';
+import { useTimeFieldState } from '@react-stately/datepicker';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
 import { SupportedCalendars } from '../types/common.types';
-import { cn, mergeStyles } from '../utils';
-import { DateInputSegment, type DateInputSegmentProps } from './date-input-segment';
+import DateField, { DateFieldProps } from './date-field';
+import DateInputGroup, { DateInputGroupProps } from './date-input-group';
 
 type TimeInputClassNames = {
   root?: string;
+  group?: string;
   label?: string;
-  container?: string;
   segmentWrapper?: string;
   segment?: string;
 };
 type TimeInputClasses = keyof TimeInputClassNames;
 type TimeInputStyles = Record<TimeInputClasses, CSSProperties>;
-export interface TimeInputProps<T extends TimeValue> extends AriaTimeFieldProps<T> {
+export interface TimeInputProps<T extends TimeValue>
+  extends AriaTimeFieldProps<T>,
+    Pick<DateFieldProps, 'inputProps' | 'fieldProps' | 'segmentProps' | 'formatSegment'>,
+    Pick<DateInputGroupProps, 'children' | 'startContent' | 'endContent' | 'labelProps' | 'groupProps'> {
   className?: string;
   classNames?: TimeInputClassNames;
   styles?: TimeInputStyles;
+  style?: CSSProperties;
   createCalendar?: (calendar: SupportedCalendars) => Calendar | null;
-  segmentProps?: DateInputSegmentProps;
-  formatSegment?: (segments: DateSegment[]) => DateSegment[];
-  startContent?: ReactNode | string;
-  endContent?: ReactNode | string;
-  children?: ReactNode | string;
 }
 
 const TimeInput = <T extends TimeValue>(props: TimeInputProps<T>, inputRef: Ref<ElementRef<'div'>>) => {
   const {
+    groupProps: groupPropsProp = {},
+    labelProps: labelPropsProp = {},
+    inputProps: inputPropsProp = {},
+    fieldProps: fieldPropsProp = {},
     className,
     classNames = {},
     styles = {} as TimeInputStyles,
+    style,
     label,
-    formatSegment = (segments) => segments,
-    validationBehavior,
     shouldForceLeadingZeros = true,
     minValue,
     maxValue,
     createCalendar: createCalendarProp,
-    isInvalid: isInvalidProp,
-    segmentProps: { className: segmentClassName = '', style: segmentStyle = {}, ...segmentProps } = {},
+    segmentProps,
+    formatSegment,
     startContent,
     endContent,
     children,
@@ -66,46 +61,39 @@ const TimeInput = <T extends TimeValue>(props: TimeInputProps<T>, inputRef: Ref<
     locale,
     minValue,
     maxValue,
-    validationBehavior,
-    isInvalid: isInvalidProp,
     shouldForceLeadingZeros,
   });
 
   const ref = useRef<HTMLDivElement>(null);
   const composedRef = useMergeRefs(ref, inputRef);
-  const { labelProps, fieldProps, inputProps } = useTimeField(etc, state, ref);
+  const { labelProps, fieldProps, inputProps } = useTimeField({ ...props, label, shouldForceLeadingZeros }, state, ref);
 
   return (
-    <div
+    <DateInputGroup
       data-disabled={state.isDisabled}
       data-invalid={state.isInvalid}
-      className={cn(classNames.root, className)}
+      className={className}
+      classNames={classNames}
+      styles={styles}
+      style={style}
       ref={composedRef}
+      label={label}
+      labelProps={mergeProps(labelProps, labelPropsProp)}
+      startContent={startContent}
+      endContent={endContent}
+      {...filterDOMProps(etc)}
     >
-      {label ? (
-        <label className={cn(classNames.label)} style={styles?.label} {...labelProps}>
-          {label}
-        </label>
-      ) : null}
-      <div data-disabled={state.isDisabled} data-invalid={state.isInvalid} className={classNames.container}>
-        {startContent}
-        <div {...fieldProps} className={cn(classNames.segmentWrapper)} style={styles?.segmentWrapper}>
-          {formatSegment(state.segments).map((segment, i) => (
-            <DateInputSegment
-              key={i}
-              className={cn(classNames.segment, segmentClassName)}
-              style={mergeStyles(styles?.segment, segmentStyle)}
-              segment={segment}
-              state={state}
-              {...segmentProps}
-            />
-          ))}
-          <input {...inputProps} />
-        </div>
-        {endContent}
-        {children}
-      </div>
-    </div>
+      <DateField
+        fieldProps={mergeProps(fieldProps, fieldPropsProp)}
+        inputProps={mergeProps(inputProps, inputPropsProp)}
+        state={state}
+        classNames={classNames}
+        segmentProps={segmentProps}
+        formatSegment={formatSegment}
+        styles={styles}
+      />
+      {children}
+    </DateInputGroup>
   );
 };
 

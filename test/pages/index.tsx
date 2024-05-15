@@ -14,9 +14,9 @@ const Page = () => {
         <div className="flex flex-col gap-4">
           <DateInput
             classNames={{
-              root: 'text-sm',
+              root: 'text-sm ',
+              group: 'flex gap-1 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
               label: 'text-sm text-gray-200 mb-1.5 block',
-              container: 'flex gap-1 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
               segmentWrapper: 'flex gap-1 items-center w-fit',
               segment:
                 'data-[placeholder=true]:text-gray-500 outline-none px-0.5 rounded-sm focus:bg-gray-800 focus:text-white text-white data-[type=literal]:text-gray-500',
@@ -26,11 +26,11 @@ const Page = () => {
           <TimeInput
             classNames={{
               root: 'text-sm',
+              group: 'flex gap-1 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
               label: 'text-sm text-gray-200 mb-1.5 block',
-              container: 'flex gap-1 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
               segmentWrapper: 'flex gap-1 items-center w-fit',
               segment:
-                'data-[placeholder=true]:text-gray-500 outline-none px-0.5 rounded-sm focus:bg-gray-400 focus:text-white text-white data-[type=literal]:text-gray-500',
+                'data-[placeholder=true]:text-gray-500 outline-none px-0.5 rounded-sm focus:bg-gray-800 focus:text-white text-white data-[type=literal]:text-gray-500',
             }}
             label="Time Input"
           />

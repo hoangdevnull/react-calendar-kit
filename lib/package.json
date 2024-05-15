@@ -43,6 +43,7 @@
   "devDependencies": {
     "@react-types/calendar": "^3.4.5",
     "@react-types/datepicker": "^3.7.3",
+    "@react-types/dialog": "^3.5.9",
     "@react-types/shared": "^3.23.0",
     "@types/react": "18.0.15"
   },

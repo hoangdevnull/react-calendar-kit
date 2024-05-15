@@ -27,7 +27,8 @@ const Page = () => {
               gridHeadRow: 'px-4 pb-2 flex justify-center text-default-400',
               gridHeadCell: 'flex w-10 justify-center items-center font-normal text-sm',
 
-              gridBodyRow: 'flex justify-center items-center',
+              gridBodyRow:
+                'flex justify-center items-center data-[picker-expanded=true]:pointer-events-none pointer-events-auto',
               gridBodyCell: 'py-0.5 px-0',
 
               cellButton: cn([
@@ -49,7 +50,7 @@ const Page = () => {
 
               picker: {
                 root: cn([
-                  'absolute inset-x-0 top-0 flex w-full h-[var(--picker-height)] justify-center z-20 transition-opacity !duration-250 bg-gray-950 rounded-lg',
+                  'absolute inset-x-0 top-0 flex w-full justify-center z-20 transition-opacity !duration-250 bg-gray-950 rounded-lg',
                   // Opened state
                   'data-[expanded=true]:pointer-events-auto data-[expanded=true]:opacity-100 opacity-0 pointer-events-none',
                 ]),
@@ -58,11 +59,11 @@ const Page = () => {
                   'flex justify-between items-center gap-2 px-4 py-2 bg-gray-900 rounded-full shadow-sm outline-none data-[pressed=true]:scale-90 scale-100 transition-transform !duration-250 group',
                 buttonIcon: 'group-data-[expanded=true]:rotate-180 transition-transform duration-250',
                 highlight:
-                  'h-8 bg-gray-600 absolute w-[calc(100%_-_16px)] rounded-md z-0 top-1/2 -translate-y-1/2 pointer-events-none',
+                  'h-10 border-y border-gray-600 absolute w-[calc(100%_-_16px)] z-0 top-1/2 -translate-y-1/2 pointer-events-none',
                 list: cn(
                   'flex flex-col items-center px-4 overflow-y-scroll scrollbar-hide snap-y snap-mandatory [--scroll-shadow-size:100px] [mask-image:linear-gradient(#000,#000,transparent_0,#000_var(--scroll-shadow-size),#000_calc(100%_-_var(--scroll-shadow-size)),transparent)]'
                 ),
-                item: 'w-full flex text-foreground items-center h-8 min-h-[32px] snap-center text-large z-20 data-[pressed=true]:opacity-50 outline-none data-[focus-visible=true]:z-20 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 transition-opacity',
+                item: 'w-full flex text-foreground items-center h-10 min-h-10 snap-center text-base z-20 data-[pressed=true]:opacity-50 outline-none data-[focus-visible=true]:z-20 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 transition-opacity',
               },
             }}
             className="text-white"

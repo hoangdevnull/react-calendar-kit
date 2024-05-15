@@ -31,13 +31,7 @@ const CalendarGrid = (props: CalendarGridProps) => {
   );
 
   const bodyContent = [...new Array(weeksInMonth).keys()].map((weekIndex) => (
-    <tr
-      className={classNames.gridBodyRow}
-      key={weekIndex}
-      // makes the browser ignore the element and its children when tabbing
-      // @ts-ignore
-      inert={isHeaderExpanded ? true : undefined}
-    >
+    <tr role="grid-body-row" className={classNames.gridBodyRow} key={weekIndex} data-picker-expanded={withAttr(isHeaderExpanded)}>
       {state
         .getDatesInWeek(weekIndex, startDate)
         .map((date, i) =>

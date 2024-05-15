@@ -6,7 +6,8 @@ import debounce from 'lodash.debounce';
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 
 import { ElementProps } from '../types/common.types';
-import { cn, getMonthRange, getYearRange, mergeStyles } from '../utils';
+import { cn, getMonthRange, getYearRange, mergeStyles, withAttr } from '../utils';
+import { areRectsIntersecting } from '../utils/are-rects-intersecting';
 import Button from './button';
 import { useCalendarContext } from './calendar-context';
 
@@ -14,24 +15,6 @@ type ItemsRefMap = Map<number, HTMLElement>;
 type CalendarPickerListType = 'months' | 'years';
 
 const SCROLL_DEBOUNCE_TIME = 200;
-
-/**
- * Checks if two DOMRect objects intersect each other.
- *
- * @param rect1 - The first DOMRect object.
- * @param rect2 - The second DOMRect object.
- * @returns A boolean indicating whether the two DOMRect objects intersect.
- */
-function areRectsIntersecting(rect1: DOMRect, rect2: DOMRect) {
-  return (
-    rect1 &&
-    rect2 &&
-    rect1.x < rect2.x + rect2.width &&
-    rect1.x + rect1.width > rect2.x &&
-    rect1.y < rect2.y + rect2.height &&
-    rect1.y + rect1.height > rect2.y
-  );
-}
 
 interface Props extends ElementProps<'div'> {
   date: CalendarDate;
@@ -231,13 +214,11 @@ const CalendarPicker = (props: Props) => {
   return (
     <div
       {...etc}
+      data-expanded={withAttr(isPickerExpanded)}
       className={cn(classNames?.picker?.root, className)}
-      style={mergeStyles(style, styles?.picker?.root)}
+      // * Lock the height so it not going to fill the parent container
+      style={mergeStyles({ height: 'var(--picker-height)' }, style, styles?.picker?.root)}
       role="picker-root"
-      data-expanded={isPickerExpanded}
-      // makes the browser ignore the element and its children when tabbing
-      // @ts-ignore
-      inert={isPickerExpanded ? true : undefined}
     >
       <div
         ref={highlightRef}
@@ -251,28 +232,26 @@ const CalendarPicker = (props: Props) => {
         style={mergeStyles(styles?.picker?.list, styles?.picker?.monthList)}
         role="picker-month-list"
       >
-        <>
-          <EmptySlot
-            total={pickerEmptyItem}
+        <EmptySlot
+          total={pickerEmptyItem}
+          className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)}
+          style={mergeStyles(styles?.picker?.item, styles?.picker?.monthItem)}
+        />
+        {months.map((month) => (
+          <Button
+            key={`picker-month-${month.value}`}
+            ref={(node) => getItemRef(node, month.value, 'months')}
             className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)}
             style={mergeStyles(styles?.picker?.item, styles?.picker?.monthItem)}
-          />
-          {months.map((month) => (
-            <Button
-              key={`picker-month-${month.value}`}
-              ref={(node) => getItemRef(node, month.value, 'months')}
-              className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)}
-              style={mergeStyles(styles?.picker?.item, styles?.picker?.monthItem)}
-              data-value={month.value}
-              tabIndex={!isPickerExpanded || state.focusedDate?.month !== month.value ? -1 : 0}
-              onKeyDown={(e) => onPickerItemKeyDown(e, month.value, 'months')}
-              onPress={(e) => onPickerItemPressed(e, 'months')}
-            >
-              {month.label}
-            </Button>
-          ))}
-          <EmptySlot total={pickerEmptyItem} className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)} />
-        </>
+            data-value={month.value}
+            tabIndex={!isPickerExpanded || state.focusedDate?.month !== month.value ? -1 : 0}
+            onKeyDown={(e) => onPickerItemKeyDown(e, month.value, 'months')}
+            onPress={(e) => onPickerItemPressed(e, 'months')}
+          >
+            {month.label}
+          </Button>
+        ))}
+        <EmptySlot total={pickerEmptyItem} className={cn(classNames?.picker?.item, classNames?.picker?.monthItem)} />
       </div>
       <div
         ref={yearsListRef}
@@ -280,31 +259,29 @@ const CalendarPicker = (props: Props) => {
         style={mergeStyles(styles?.picker?.list, styles?.picker?.yearList)}
         role="picker-year-list"
       >
-        <>
-          <EmptySlot
-            total={pickerEmptyItem}
+        <EmptySlot
+          total={pickerEmptyItem}
+          className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
+          style={mergeStyles(styles?.picker?.item, styles?.picker?.yearItem)}
+        />
+        {years.map((year) => (
+          <Button
+            key={`picker-year-${year.value}`}
+            ref={(node) => getItemRef(node, year.value, 'years')}
             className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
-            style={mergeStyles(styles?.picker?.item, styles?.picker?.yearItem)}
-          />
-          {years.map((year) => (
-            <Button
-              key={`picker-year-${year.value}`}
-              ref={(node) => getItemRef(node, year.value, 'years')}
-              className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
-              data-value={year.value}
-              tabIndex={!isPickerExpanded || state.focusedDate?.year !== year.value ? -1 : 0}
-              onKeyDown={(e) => onPickerItemKeyDown(e, year.value, 'years')}
-              onPress={(e) => onPickerItemPressed(e, 'years')}
-            >
-              {year.label}
-            </Button>
-          ))}
-          <EmptySlot
-            total={pickerEmptyItem}
-            className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
-            style={mergeStyles(styles?.picker?.item, styles?.picker?.yearItem)}
-          />
-        </>
+            data-value={year.value}
+            tabIndex={!isPickerExpanded || state.focusedDate?.year !== year.value ? -1 : 0}
+            onKeyDown={(e) => onPickerItemKeyDown(e, year.value, 'years')}
+            onPress={(e) => onPickerItemPressed(e, 'years')}
+          >
+            {year.label}
+          </Button>
+        ))}
+        <EmptySlot
+          total={pickerEmptyItem}
+          className={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
+          style={mergeStyles(styles?.picker?.item, styles?.picker?.yearItem)}
+        />
       </div>
     </div>
   );

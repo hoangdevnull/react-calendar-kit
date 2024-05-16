@@ -1,8 +1,8 @@
-import React, { ComponentPropsWithoutRef } from 'react';
+import React, { type ComponentPropsWithoutRef } from 'react';
 
 const CalendarButton = (props: ComponentPropsWithoutRef<'button'>) => {
   return (
-    <button className="text-white ml-4 flex items-center justify-center" {...props}>
+    <button className="ml-4 flex items-center justify-center text-white" {...props}>
       <svg width={20} height={20} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none">
         <path
           stroke="currentColor"

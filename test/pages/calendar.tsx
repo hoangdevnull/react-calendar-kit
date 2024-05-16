@@ -9,7 +9,7 @@ const fontSans = Roboto({ subsets: ['latin'], weight: ['300', '400', '500'] });
 const Page = () => {
   return (
     <div className={fontSans.className}>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-900">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-900">
         <div className="flex flex-col gap-4">
           <Primitives.Calendar
             visibleMonths={1}

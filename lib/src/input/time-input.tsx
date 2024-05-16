@@ -1,15 +1,13 @@
-import React, { CSSProperties, forwardRef, useRef, type ElementRef, type ReactElement, type Ref } from 'react';
-import { type Calendar } from '@internationalized/date';
+import React, { forwardRef, useRef, type CSSProperties, type ElementRef, type ReactElement, type Ref } from 'react';
 import { useTimeField, type AriaTimeFieldProps, type TimeValue } from '@react-aria/datepicker';
 import { useLocale } from '@react-aria/i18n';
 import { filterDOMProps, mergeProps } from '@react-aria/utils';
 import { useTimeFieldState } from '@react-stately/datepicker';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
-import { SupportedCalendars } from '../types/common.types';
 import type { InputClassNames, InputStyles } from '../types/theme.types';
-import DateField, { DateFieldProps } from './date-field';
-import DateInputGroup, { DateInputGroupProps } from './date-input-group';
+import DateField, { type DateFieldProps } from './date-field';
+import DateInputGroup, { type DateInputGroupProps } from './date-input-group';
 
 interface Props<T extends TimeValue>
   extends AriaTimeFieldProps<T>,
@@ -19,7 +17,6 @@ interface Props<T extends TimeValue>
   classNames?: InputClassNames;
   styles?: InputStyles;
   style?: CSSProperties;
-  createCalendar?: (calendar: SupportedCalendars) => Calendar | null;
 }
 
 const TimeInput = <T extends TimeValue>(props: Props<T>, inputRef: Ref<ElementRef<'div'>>) => {
@@ -35,7 +32,6 @@ const TimeInput = <T extends TimeValue>(props: Props<T>, inputRef: Ref<ElementRe
     shouldForceLeadingZeros = true,
     minValue,
     maxValue,
-    createCalendar: createCalendarProp,
     segmentProps,
     formatSegment,
     startContent,
@@ -71,7 +67,7 @@ const TimeInput = <T extends TimeValue>(props: Props<T>, inputRef: Ref<ElementRe
       startContent={startContent}
       endContent={endContent}
       label={props.label}
-      {...filterDOMProps(etc)}
+      {...mergeProps(groupPropsProp, filterDOMProps(etc))}
     >
       <DateField
         fieldProps={mergeProps(fieldProps, fieldPropsProp)}

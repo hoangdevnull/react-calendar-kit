@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { CalendarDate } from '@internationalized/date';
+import { type CalendarDate } from '@internationalized/date';
 import { useDateFormatter } from '@react-aria/i18n';
 
-import { ElementProps } from '../types/common.types';
+import { type ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
 import Button from './button';
 import { useCalendarContext } from './calendar-context';

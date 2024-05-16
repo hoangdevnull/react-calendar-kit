@@ -1,13 +1,21 @@
-import React, { ElementRef, forwardRef, useMemo, useRef, type ForwardedRef, type ReactElement, type Ref } from 'react';
+import React, {
+  forwardRef,
+  useMemo,
+  useRef,
+  type ElementRef,
+  type ForwardedRef,
+  type ReactElement,
+  type Ref,
+} from 'react';
 import { CalendarDate, createCalendar, type Calendar as CalendarType, type DateValue } from '@internationalized/date';
-import { AriaCalendarGridProps, useRangeCalendar } from '@react-aria/calendar';
+import { useRangeCalendar, type AriaCalendarGridProps } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
 import { useRangeCalendarState } from '@react-stately/calendar';
-import { AriaRangeCalendarProps } from '@react-types/calendar';
+import { type AriaRangeCalendarProps } from '@react-types/calendar';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
-import { SupportedCalendars } from '../types/common.types';
-import { CalendarClassNames, CalendarProvider } from './calendar-context';
+import { type SupportedCalendars } from '../types/common.types';
+import { CalendarProvider, type CalendarClassNames } from './calendar-context';
 import CalendarRoot from './calendar-root';
 
 interface Props<T extends DateValue> extends AriaRangeCalendarProps<T> {

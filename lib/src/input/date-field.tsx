@@ -1,9 +1,9 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react';
+import React, { forwardRef, type InputHTMLAttributes } from 'react';
 import { mergeProps } from '@react-aria/utils';
-import { DateFieldState, DateSegment } from '@react-stately/datepicker';
-import { GroupDOMAttributes } from '@react-types/shared';
+import { type DateFieldState, type DateSegment } from '@react-stately/datepicker';
+import { type GroupDOMAttributes } from '@react-types/shared';
 
-import { ElementProps } from '../types/common.types';
+import { type ElementProps } from '../types/common.types';
 import type { InputClassNames, InputStyles } from '../types/theme.types';
 import { cn, mergeStyles } from '../utils';
 import { DateInputSegment, type DateInputSegmentProps } from './date-input-segment';

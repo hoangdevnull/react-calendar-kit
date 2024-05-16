@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDateSegment } from '@react-aria/datepicker';
 import { type DateFieldState, type DateSegment } from '@react-stately/datepicker';
 
-import { ElementProps } from '../types/common.types';
+import { type ElementProps } from '../types/common.types';
 
 export interface DateInputSegmentProps extends ElementProps<'div'> {
   state: DateFieldState;

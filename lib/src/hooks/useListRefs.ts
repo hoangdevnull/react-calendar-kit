@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 
 type RefMap<T extends HTMLElement> = Map<number, T>;
 
-const useListRefs = <T extends HTMLElement,>(): [(node: T, key: number) => void, () => RefMap<T>] => {
+const useListRefs = <T extends HTMLElement>(): [(node: T, key: number) => void, () => RefMap<T>] => {
   const trackingRefs = useRef<RefMap<T>>(new Map());
 
   function getRefs() {
@@ -13,7 +13,6 @@ const useListRefs = <T extends HTMLElement,>(): [(node: T, key: number) => void,
     return trackingRefs.current;
   }
 
-
   function bindRefs(node: T | null, key: number) {
     if (node) {
       trackingRefs.current.set(key, node);
@@ -22,7 +21,7 @@ const useListRefs = <T extends HTMLElement,>(): [(node: T, key: number) => void,
     }
   }
 
-  return [bindRefs, getRefs]
+  return [bindRefs, getRefs];
 };
 
 export default useListRefs;

@@ -1,7 +1,7 @@
 import React, { forwardRef, Fragment, useMemo, type ForwardedRef, type ReactNode } from 'react';
 import { type CalendarAria } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
-import { filterDOMProps, mergeProps } from '@react-aria/utils';
+import { mergeProps } from '@react-aria/utils';
 import { VisuallyHidden } from '@react-aria/visually-hidden';
 
 import { cn, mergeStyles } from '../utils';
@@ -20,7 +20,7 @@ export interface CalendarRootProps extends CalendarAria {
 }
 
 const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTMLDivElement>) => {
-  const { calendarProps, className, prevButtonProps, nextButtonProps, header, footer, ...etc } = props;
+  const { calendarProps, className, prevButtonProps, nextButtonProps, header, footer } = props;
 
   const { state, visibleMonths, classNames, withPicker, pickerHeight, isPickerExpanded, styles } = useCalendarContext();
 

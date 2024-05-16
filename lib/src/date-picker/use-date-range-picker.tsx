@@ -1,14 +1,14 @@
-import React, { MutableRefObject, useRef } from 'react';
+import { useRef, type MutableRefObject } from 'react';
+import type React from 'react';
 import { CalendarDate } from '@internationalized/date';
 import type { AriaButtonProps } from '@react-aria/button';
 import {
   useDateRangePicker as useAriaDateRangePicker,
-  type AriaDatePickerProps,
   type AriaDateRangePickerProps,
   type DateValue,
 } from '@react-aria/datepicker';
 import { mergeProps } from '@react-aria/utils';
-import { DateRangePickerState, useDateRangePickerState } from '@react-stately/datepicker';
+import { useDateRangePickerState, type DateRangePickerState } from '@react-stately/datepicker';
 import type { CalendarProps } from '@react-types/calendar';
 import type { AriaDialogProps } from '@react-types/dialog';
 import type { DOMAttributes, GroupDOMAttributes } from '@react-types/shared';
@@ -79,6 +79,7 @@ export const useDateRangePicker = <T extends DateValue>(
   const getTriggerProps = {
     ...baseTriggerProps,
     onClick: () => state.toggle(),
+    onPress,
     'data-disabled': withAttr(isDisabled),
   } as ElementProps<'button'>;
 

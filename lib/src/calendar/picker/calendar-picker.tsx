@@ -1,8 +1,8 @@
-import React, { ElementRef, memo, useMemo, useRef } from 'react';
-import { CalendarDate } from '@internationalized/date';
+import React, { memo, useMemo, useRef, type ElementRef } from 'react';
+import { type CalendarDate } from '@internationalized/date';
 import { useDateFormatter } from '@react-aria/i18n';
 
-import { ElementProps } from '../../types/common.types';
+import { type ElementProps } from '../../types/common.types';
 import { cn, getMonthRange, getYearRange, mergeStyles, withAttr } from '../../utils';
 import { useCalendarContext } from '../calendar-context';
 import CalendarPickerList from './calendar-picker-list';
@@ -43,7 +43,7 @@ const CalendarPicker = (props: Props) => {
       value: m.month,
       label: monthDateFormatter.format(m.toDate(state.timeZone)),
     }));
-  }, [state.minValue, state.maxValue, monthDateFormatter, state.timeZone]);
+  }, [date, monthDateFormatter, state.timeZone]);
 
   return (
     <div

@@ -2,7 +2,7 @@ import type { ReactElement, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
 import type { DOMAttributes, GroupDOMAttributes } from '@react-types/shared';
 
-import { ElementProps } from '../types/common.types';
+import { type ElementProps } from '../types/common.types';
 import type { InputClassNames, InputStyles } from '../types/theme.types';
 import { cn, mergeStyles } from '../utils';
 

@@ -1,15 +1,15 @@
 import React, { useRef } from 'react';
-import { CalendarDate, getDayOfWeek, isSameDay, isSameMonth, isToday } from '@internationalized/date';
-import { AriaCalendarCellProps, useCalendarCell } from '@react-aria/calendar';
+import { getDayOfWeek, isSameDay, isSameMonth, isToday, type CalendarDate } from '@internationalized/date';
+import { useCalendarCell, type AriaCalendarCellProps } from '@react-aria/calendar';
 import { useFocusRing } from '@react-aria/focus';
 import { useLocale } from '@react-aria/i18n';
 import { useHover } from '@react-aria/interactions';
 import { mergeProps } from '@react-aria/utils';
-import { CalendarState, RangeCalendarState } from '@react-stately/calendar';
+import { type CalendarState, type RangeCalendarState } from '@react-stately/calendar';
 
-import { ElementProps } from '../types/common.types';
+import { type ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
-import { CalendarClassNames, CalendarStyles } from './calendar-context';
+import { type CalendarClassNames, type CalendarStyles } from './calendar-context';
 
 export interface CalendarCellProps extends ElementProps<'td'>, AriaCalendarCellProps {
   state: CalendarState | RangeCalendarState;

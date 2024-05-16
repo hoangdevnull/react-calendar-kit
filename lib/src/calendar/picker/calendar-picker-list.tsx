@@ -1,12 +1,20 @@
-import React, { CSSProperties, ElementRef, memo, MutableRefObject, useCallback, useEffect, useRef } from 'react';
-import { CalendarDate, DateFields } from '@internationalized/date';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  type CSSProperties,
+  type ElementRef,
+  type MutableRefObject,
+} from 'react';
+import { type CalendarDate, type DateFields } from '@internationalized/date';
 import type { PressEvent } from '@react-types/shared';
 import debounce from 'lodash.debounce';
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 
 import useListRefs from '../../hooks/useListRefs';
-import { ElementProps } from '../../types/common.types';
-import { mergeStyles } from '../../utils';
+import { type ElementProps } from '../../types/common.types';
+import { cn, mergeStyles } from '../../utils';
 import { areRectsIntersecting } from '../../utils/are-rects-intersecting';
 import Button from '../button';
 import { useCalendarContext } from '../calendar-context';
@@ -72,12 +80,14 @@ const CalendarPickerList = (props: Props) => {
       const selectedDate = state.focusedDate.set({ [listType]: itemValue });
       state.setFocusedDate(selectedDate);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [state, listType, isPickerExpanded]
   );
 
   // scroll to the selected month/year when the component is mounted/opened/closed
   useEffect(() => {
     scrollIntoView(initialDate[listType] as number, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPickerExpanded, listType]);
 
   // add scroll event listener to listRef
@@ -96,6 +106,7 @@ const CalendarPickerList = (props: Props) => {
         currentRef?.removeEventListener('scroll', debouncedHandleScroll);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleListScroll]);
 
   function scrollIntoView(value: number, smooth = true) {
@@ -119,6 +130,7 @@ const CalendarPickerList = (props: Props) => {
       if (!value) return;
       scrollIntoView(value);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [state]
   );
 
@@ -159,14 +171,14 @@ const CalendarPickerList = (props: Props) => {
       }
       itemRefs.get(nextValue)?.focus();
     },
-    [state, options]
+    [getItemsRef, options.length, setPickerExpanded, headerRef]
   );
 
   return (
     <div
       ref={listRef}
-      className={listClassName}
-      style={mergeStyles({ overflowY: 'scroll' }, listStyle)}
+      className={cn(listClassName, className)}
+      style={mergeStyles({ overflowY: 'scroll' }, style, listStyle)}
       role={`picker-${listType}-list`}
       {...etc}
     >

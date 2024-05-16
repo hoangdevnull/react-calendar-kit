@@ -1,5 +1,5 @@
-import { CSSProperties, RefObject } from 'react';
-import { AriaCalendarGridProps } from '@react-aria/calendar';
+import { type CSSProperties, type RefObject } from 'react';
+import { type AriaCalendarGridProps } from '@react-aria/calendar';
 import type { CalendarState, RangeCalendarState } from '@react-stately/calendar';
 
 import { createSafeContext } from '../utils/create-safe-context';

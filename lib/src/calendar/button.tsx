@@ -1,11 +1,11 @@
-import React, { ElementRef, forwardRef, useRef } from 'react';
-import { AriaButtonProps, useButton } from '@react-aria/button';
+import React, { forwardRef, useRef, type ElementRef } from 'react';
+import { useButton, type AriaButtonProps } from '@react-aria/button';
 import { useFocusRing } from '@react-aria/focus';
 import { useHover } from '@react-aria/interactions';
 import { filterDOMProps, mergeProps } from '@react-aria/utils';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
-import { ElementProps } from '../types/common.types';
+import { type ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
 
 export interface ButtonProps extends AriaButtonProps, ElementProps<'button', keyof AriaButtonProps> {}

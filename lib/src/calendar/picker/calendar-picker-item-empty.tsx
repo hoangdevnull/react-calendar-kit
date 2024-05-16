@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { ElementProps } from '../../types/common.types';
+import { type ElementProps } from '../../types/common.types';
 
 const PickerItemEmpty = ({ className, total, ...props }: ElementProps<'div'> & { total: number }) => {
   return (

@@ -56,6 +56,9 @@ importers:
       '@react-aria/utils':
         specifier: ^3.24.0
         version: 3.24.0(react@18.2.0)
+      '@react-aria/visually-hidden':
+        specifier: ^3.8.11
+        version: 3.8.11(react@18.2.0)
       '@react-stately/calendar':
         specifier: ^3.5.0
         version: 3.5.0(react@18.2.0)
@@ -567,6 +570,11 @@ packages:
 
   '@react-aria/utils@3.24.0':
     resolution: {integrity: sha512-JAxkPhK5fCvFVNY2YG3TW3m1nTzwRcbz7iyTSkUzLFat4N4LZ7Kzh7NMHsgeE/oMOxd8zLY+XsUxMu/E/2GujA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
+
+  '@react-aria/visually-hidden@3.8.11':
+    resolution: {integrity: sha512-1JFruyAatoKnC18qrix8Q1gyUNlizWZvYdPADgB5btakMy0PEGTWPmFRK5gFsO+N0CZLCFTCip0dkUv6rrp31w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
 
@@ -2083,6 +2091,14 @@ snapshots:
       '@react-types/shared': 3.23.0(react@18.2.0)
       '@swc/helpers': 0.5.11
       clsx: 2.1.1
+      react: 18.2.0
+
+  '@react-aria/visually-hidden@3.8.11(react@18.2.0)':
+    dependencies:
+      '@react-aria/interactions': 3.21.2(react@18.2.0)
+      '@react-aria/utils': 3.24.0(react@18.2.0)
+      '@react-types/shared': 3.23.0(react@18.2.0)
+      '@swc/helpers': 0.5.11
       react: 18.2.0
 
   '@react-stately/calendar@3.5.0(react@18.2.0)':

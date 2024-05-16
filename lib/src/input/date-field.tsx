@@ -1,17 +1,12 @@
-import React, { CSSProperties, forwardRef, InputHTMLAttributes } from 'react';
+import React, { forwardRef, InputHTMLAttributes } from 'react';
+import { mergeProps } from '@react-aria/utils';
 import { DateFieldState, DateSegment } from '@react-stately/datepicker';
 import { GroupDOMAttributes } from '@react-types/shared';
 
 import { ElementProps } from '../types/common.types';
+import type { InputClassNames, InputStyles } from '../types/theme.types';
 import { cn, mergeStyles } from '../utils';
-import { DateInputSegment, DateInputSegmentProps } from './date-input-segment';
-
-type DateFieldClassNames = {
-  segmentWrapper?: string;
-  segment?: string;
-};
-type DateFieldClasses = keyof DateFieldClassNames;
-type DateFieldStyles = Record<DateFieldClasses, CSSProperties>;
+import { DateInputSegment, type DateInputSegmentProps } from './date-input-segment';
 
 export interface DateFieldProps extends ElementProps<'div', keyof GroupDOMAttributes> {
   /** State for the date field. */
@@ -21,8 +16,8 @@ export interface DateFieldProps extends ElementProps<'div', keyof GroupDOMAttrib
   fieldProps?: GroupDOMAttributes;
   segmentProps?: DateInputSegmentProps;
   formatSegment?: (segments: DateSegment[]) => DateSegment[];
-  classNames?: DateFieldClassNames;
-  styles?: DateFieldStyles;
+  classNames?: Pick<InputClassNames, 'segmentWrapper' | 'segment'>;
+  styles?: Pick<InputStyles, 'segmentWrapper' | 'segment'>;
 }
 const DateField = forwardRef<HTMLDivElement, DateFieldProps>((props, ref) => {
   const {
@@ -33,11 +28,12 @@ const DateField = forwardRef<HTMLDivElement, DateFieldProps>((props, ref) => {
     fieldProps = {},
     segmentProps: { className: segmentClassName = '', style: segmentStyle = {}, ...segmentProps } = {},
     formatSegment = (segments) => segments,
+    ...etc
   } = props;
 
   return (
     <div
-      {...fieldProps}
+      {...mergeProps(fieldProps, etc)}
       data-disabled={state.isDisabled}
       data-invalid={state.isInvalid}
       className={cn(classNames.segmentWrapper)}

@@ -8,9 +8,9 @@ import { AriaCalendarProps } from '@react-types/calendar';
 import { useControllableState } from '../hooks/useControlableState';
 import { SupportedCalendars } from '../types/common.types';
 import { CalendarClassNames, CalendarProvider, CalendarStyles } from './calendar-context';
-import CalendarRoot from './calendar-root';
+import CalendarRoot, { CalendarRootProps } from './calendar-root';
 
-interface Props<T extends DateValue> extends AriaCalendarProps<T> {
+interface Props<T extends DateValue> extends AriaCalendarProps<T>, Pick<CalendarRootProps, 'header' | 'footer'> {
   createCalendar?: (calendar: SupportedCalendars) => CalendarType | null;
   /**
    * The style of the weekday labels.
@@ -79,6 +79,7 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
     pickerOpen,
     defaultPickerOpen = false,
     onPickerOpenChange,
+    ...etc
   } = props;
 
   const { locale } = useLocale();
@@ -128,6 +129,7 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
         title={title}
         errorMessageProps={errorMessageProps}
         className={className}
+        {...etc}
       />
     </CalendarProvider>
   );

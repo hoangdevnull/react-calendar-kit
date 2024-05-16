@@ -1,22 +1,26 @@
-import React, { ForwardedRef, forwardRef, Fragment, useMemo } from 'react';
-import { CalendarAria } from '@react-aria/calendar';
+import React, { forwardRef, Fragment, useMemo, type ForwardedRef, type ReactNode } from 'react';
+import { type CalendarAria } from '@react-aria/calendar';
 import { useLocale } from '@react-aria/i18n';
+import { filterDOMProps, mergeProps } from '@react-aria/utils';
+import { VisuallyHidden } from '@react-aria/visually-hidden';
 
 import { cn, mergeStyles } from '../utils';
 import Button from './button';
 import { useCalendarContext } from './calendar-context';
 import CalendarGrid from './calendar-grid';
 import CalendarHeader from './calendar-header';
-import CalendarPicker from './picker/calendar-picker';
 import ChevronLeftIcon from './icons/chevron-left-icon';
 import ChevronRightIcon from './icons/chevron-right-icon';
+import CalendarPicker from './picker/calendar-picker';
 
-interface Props extends CalendarAria {
+export interface CalendarRootProps extends CalendarAria {
   className?: string;
+  header?: ReactNode;
+  footer?: ReactNode;
 }
 
-const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>) => {
-  const { calendarProps, className, prevButtonProps, nextButtonProps } = props;
+const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTMLDivElement>) => {
+  const { calendarProps, className, prevButtonProps, nextButtonProps, header, footer, ...etc } = props;
 
   const { state, visibleMonths, classNames, withPicker, pickerHeight, isPickerExpanded, styles } = useCalendarContext();
 
@@ -73,7 +77,7 @@ const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>
 
   return (
     <div
-      {...calendarProps}
+      {...mergeProps(calendarProps)}
       style={mergeStyles(
         { '--picker-height': `${pickerHeight}px` } as React.CSSProperties,
         calendarProps?.style,
@@ -82,6 +86,10 @@ const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>
       className={cn(className, classNames.root)}
       ref={ref}
     >
+      {header}
+      <VisuallyHidden>
+        <h2>{calendarProps['aria-label']}</h2>
+      </VisuallyHidden>
       <div className={classNames.container} style={styles?.container}>
         <div className={classNames.header} style={styles?.header}>
           {content.headers}
@@ -99,6 +107,15 @@ const CalendarRoot = forwardRef((props: Props, ref: ForwardedRef<HTMLDivElement>
           {content.calendars}
         </div>
       </div>
+      <VisuallyHidden>
+        <button
+          aria-label={nextButtonProps['aria-label']}
+          disabled={nextButtonProps.isDisabled}
+          tabIndex={-1}
+          onClick={() => state.focusNextPage()}
+        />
+      </VisuallyHidden>
+      {footer}
     </div>
   );
 });

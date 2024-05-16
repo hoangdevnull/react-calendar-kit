@@ -1,32 +1,25 @@
-import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
 import type { DOMAttributes, GroupDOMAttributes } from '@react-types/shared';
 
 import { ElementProps } from '../types/common.types';
+import type { InputClassNames, InputStyles } from '../types/theme.types';
 import { cn, mergeStyles } from '../utils';
-
-type DateInputGroupClassNames = {
-  root?: string;
-  group?: string;
-  label?: string;
-};
-type DateInputGroupClasses = keyof DateInputGroupClassNames;
-type DateInputGroupStyles = Record<DateInputGroupClasses, CSSProperties>;
 
 export interface DateInputGroupProps extends ElementProps<'div'> {
   children?: ReactNode;
+  label?: ReactNode;
   groupProps?: GroupDOMAttributes;
   labelProps?: DOMAttributes;
-  label?: ReactNode;
   startContent?: ReactElement | ReactElement[];
   endContent?: ReactElement | ReactElement[];
-  classNames?: DateInputGroupClassNames;
-  styles?: DateInputGroupStyles;
+  classNames?: Pick<InputClassNames, 'root' | 'group' | 'label'>;
+  styles?: Pick<InputStyles, 'root' | 'group' | 'label'>;
 }
 
 const DateInputGroup = forwardRef<HTMLDivElement, DateInputGroupProps>((props, ref) => {
   const {
-    label,
+    label: labelProp,
     labelProps,
     children,
     groupProps,
@@ -38,6 +31,8 @@ const DateInputGroup = forwardRef<HTMLDivElement, DateInputGroupProps>((props, r
     endContent,
     ...otherProps
   } = props;
+
+  const label = labelProps?.children ?? labelProp;
 
   return (
     <div

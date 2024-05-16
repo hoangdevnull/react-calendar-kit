@@ -34,6 +34,7 @@
     "@react-aria/i18n": "^3.11.0",
     "@react-aria/interactions": "^3.21.2",
     "@react-aria/utils": "^3.24.0",
+    "@react-aria/visually-hidden": "^3.8.11",
     "@react-stately/calendar": "^3.5.0",
     "@react-stately/datepicker": "^3.9.3",
     "clsx": "^2.1.1",

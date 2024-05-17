@@ -5,6 +5,7 @@
     "build": "pnpm -F calendar-kit build",
     "dev": "pnpm -F calendar-kit build --watch",
     "preview": "pnpm -F calendar-kit-tests dev",
+    "website": "pnpm -F calendar-kit-website dev",
     "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
     "preinstall": "npx only-allow pnpm",
     "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",

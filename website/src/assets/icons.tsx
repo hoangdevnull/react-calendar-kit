@@ -1,6 +1,10 @@
 import { type ForwardRefExoticComponent, type RefAttributes, type SVGProps } from 'react';
 
-const IconList = {};
+import check from './svg/check.svg';
+import copy from './svg/copy.svg';
+import github from './svg/github.svg';
+
+const IconList = { check, copy, github };
 
 type SVGAttributes = Partial<SVGProps<SVGSVGElement>>;
 type ComponentAttributes = RefAttributes<SVGSVGElement> & SVGAttributes;

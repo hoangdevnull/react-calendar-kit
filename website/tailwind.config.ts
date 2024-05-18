@@ -20,14 +20,21 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-btn': 'linear-gradient(180deg, rgba(60, 66, 208, 0.00) 0%, rgba(60, 66, 208, 0.60) 100%)',
+        'gradient-primary-btn': 'linear-gradient(180deg, #A9ACE7 0%, rgba(138, 142, 220, 0.40) 100%)',
+        'gradient-secondary-btn': 'linear-gradient(180deg, rgba(127, 86, 217, 0.00) 0%, rgba(127, 86, 217, 0.60) 100%)',
         'gradient-nav': 'linear-gradient(180deg, #A9ACE7 0%, rgba(138, 142, 220, 0.40) 100%)',
-        'gradient-secondary-btn': 'linear-gradient(180deg, #A9ACE7 0%, rgba(138, 142, 220, 0.40) 100%)',
         'gradient-text': 'linear-gradient(272deg, #0B0E66 -14.22%, #EDEDF2 50.45%, #0B0E66 116.9%)',
       },
       colors: {
         background: '#0C111D',
         foreground: '#F5F5F6',
+        primary: '#7F56D9',
+        secondary: '#A9ACE7',
+      },
+      boxShadow: {
+        'primary-button': '0px -8px 20px 0px rgba(60, 66, 208, 0.60) inset, 0px 6px 44px 0px #060848',
+        'secondary-button': '0px 6px 44px 0px #060848',
+        input: `0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)`,
       },
     },
   },

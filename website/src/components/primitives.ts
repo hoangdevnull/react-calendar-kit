@@ -83,6 +83,7 @@ export const container = tv({
   variants: {
     size: {
       default: 'max-w-7xl',
+      sm: 'max-w-5xl',
       lg: 'max-w-[1320px]',
       '2xl': 'max-w-[1536px]',
       '3xl': 'max-w-[1668px]',

@@ -10,7 +10,7 @@ import {
   type DateRangeInputProps,
   type RangeCalendarProps,
   type TimeInputProps,
-} from 'calendar-kit';
+} from 'react-calendar-kit';
 
 import { cn } from '../../utils';
 

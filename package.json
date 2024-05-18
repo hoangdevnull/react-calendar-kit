@@ -4,8 +4,8 @@
   "scripts": {
     "build": "pnpm -F react-calendar-kit build",
     "dev": "pnpm -F react-calendar-kit build --watch",
-    "preview": "pnpm -F react-calendar-kit-tests dev",
-    "website": "pnpm -F react-calendar-kit-website dev",
+    "dev:preview": "pnpm -F react-calendar-kit-tests dev",
+    "dev:docs": "pnpm -F react-calendar-kit-website dev",
     "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
     "preinstall": "npx only-allow pnpm",
     "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",
@@ -22,7 +22,7 @@
     "next": "13.5.1",
     "prettier": "2.7.1",
     "tsup": "8.0.1",
-    "typescript": "4.6.4"
+    "typescript": "5.1.6"
   },
   "packageManager": "pnpm@9.0.4",
   "lint-staged": {

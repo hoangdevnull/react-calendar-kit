@@ -1,5 +1,5 @@
 {
-  "name": "calendar-kit-website",
+  "name": "react-calendar-kit-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "calendar-kit": "workspace:*",
+    "react-calendar-kit": "workspace:*",
     "clsx": "^2.1.1",
     "contentlayer": "^0.3.4",
     "next": "14.2.3",

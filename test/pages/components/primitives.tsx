@@ -16,21 +16,24 @@ const Calendar = forwardRef<ElementRef<typeof CalendarKit.Calendar>, CalendarPro
     classNames={{
       root: 'bg-gray-950 rounded-lg w-fit',
       gridWrapper: 'flex justify-between',
-      gridGroup: 'relative w-full h-full py-4',
-      header: 'relative p-4 flex items-center justify-between gap-2  [&_.chevron-icon]:flex-none',
-      nav: 'min-w-10 aspect-square h-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-800 absolute top-1/2 -translate-y-1/2',
-      nextButton: 'right-3',
-      previousButton: 'left-3',
-      month: 'w-full flex items-center justify-center',
+      gridGroup: 'relative w-full h-full pb-4',
+      header: 'relative p-4 flex items-center justify-between gap-2',
+      navGroup: 'flex items-center gap-2',
+      nav: 'min-w-10 aspect-square h-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-800',
+      month: cn([
+        'flex w-full items-center justify-center',
 
+        // Position for each layout
+        'data-[layout=apart]:justify-center',
+        'data-[layout=left]:justify-end data-[layout=left]:pr-2',
+        'data-[layout=right]:justify-start data-[layout=right]:pl-2',
+      ]),
       gridHead: '',
-      gridHeadRow: 'px-4 pb-2 flex justify-center text-default-400',
+      gridHeadRow: 'text-default-400 flex justify-center px-4 pb-2',
       gridHeadCell: 'flex w-10 justify-center items-center font-normal text-sm',
-
       gridBodyRow:
         'flex justify-center items-center data-[picker-expanded=true]:pointer-events-none pointer-events-auto',
       gridBodyCell: 'py-0.5 px-0',
-
       cellButton: cn([
         // Base
         'tap-highlight-transparent box-border flex h-10 w-10 origin-center select-none appearance-none items-center justify-center overflow-hidden whitespace-nowrap rounded-full text-sm font-normal text-white subpixel-antialiased shadow-none outline-none transition-[transform,background-color,color] duration-100',
@@ -47,7 +50,7 @@ const Calendar = forwardRef<ElementRef<typeof CalendarKit.Calendar>, CalendarPro
         // Click state
         'scale-100 data-[pressed=true]:scale-90 data-[pressed=true]:bg-blue-600 data-[pressed=true]:text-white',
       ]),
-
+      // Styles for month/year picker
       picker: {
         root: cn([
           '!duration-250 absolute inset-x-0 top-0 z-20 flex w-full justify-center rounded-lg bg-gray-950 transition-opacity',
@@ -55,21 +58,23 @@ const Calendar = forwardRef<ElementRef<typeof CalendarKit.Calendar>, CalendarPro
           'pointer-events-none opacity-0 data-[expanded=true]:pointer-events-auto data-[expanded=true]:opacity-100',
         ]),
 
-        button:
-          'flex justify-between items-center gap-2 px-4 py-2 bg-gray-900 rounded-full shadow-sm outline-none data-[pressed=true]:scale-90 scale-100 transition-transform !duration-250 group',
+        button: cn([
+          'flex items-center justify-between gap-2 rounded-full !bg-gray-900 px-4 py-2 ',
+          '!duration-250 group scale-100 shadow-sm outline-none transition-transform data-[pressed=true]:scale-90',
+        ]),
         buttonIcon: 'group-data-[expanded=true]:rotate-180 transition-transform duration-250',
         highlight:
           'h-10 border-y border-gray-600 absolute w-[calc(100%_-_16px)] z-0 top-1/2 -translate-y-1/2 pointer-events-none',
-        list: cn(
-          'scrollbar-hide flex snap-y snap-mandatory flex-col items-center overflow-y-scroll px-4 [--scroll-shadow-size:100px] [mask-image:linear-gradient(#000,#000,transparent_0,#000_var(--scroll-shadow-size),#000_calc(100%_-_var(--scroll-shadow-size)),transparent)]'
-        ),
-        item: 'w-full flex text-foreground items-center h-10 min-h-10 snap-center text-base z-20 data-[pressed=true]:opacity-50 outline-none data-[focus-visible=true]:z-20 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 transition-opacity',
+        list: cn([
+          'scrollbar-hide flex snap-y snap-mandatory flex-col items-center overflow-y-scroll px-4 ',
+          '[--scroll-shadow-size:100px] [mask-image:linear-gradient(#000,#000,transparent_0,#000_var(--scroll-shadow-size),#000_calc(100%_-_var(--scroll-shadow-size)),transparent)]',
+        ]),
+        item: cn([
+          'text-foreground z-20 flex h-10 min-h-10 w-full snap-center items-center text-base transition-opacity',
+          'data-[focus-visible=true]:outline-focus outline-none data-[focus-visible=true]:z-20 data-[pressed=true]:opacity-50 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-offset-2 ',
+        ]),
       },
     }}
-    className="text-white"
-    visibleMonths={1}
-    weekdayStyle="short"
-    withPicker
     {...props}
   />
 ));
@@ -77,10 +82,10 @@ const RangeCalendar = forwardRef<ElementRef<typeof CalendarKit.RangeCalendar>, R
   <CalendarKit.RangeCalendar
     ref={ref}
     classNames={{
-      root: 'bg-gray-950 w-fit rounded-lg',
+      root: 'bg-gray-950  w-fit rounded-lg',
       gridWrapper: 'flex justify-between pb-4',
       gridGroup: 'relative w-full h-full',
-      header: 'relative p-4 flex items-center justify-between gap-2  [&_.chevron-icon]:flex-none',
+      header: 'relative p-4 flex items-center justify-between gap-2',
       nav: 'min-w-10 aspect-square h-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-800 absolute top-1/2 -translate-y-1/2',
       nextButton: 'right-3',
       previousButton: 'left-3',
@@ -145,7 +150,7 @@ const DateRangeInput = forwardRef<ElementRef<typeof CalendarKit.DateRangeInput>,
     ref={ref}
     classNames={{
       root: 'text-sm text-gray-200',
-      group: 'flex gap-0.5 items-center border border-gray-400 w-fit px-3 py-2x rounded-md',
+      group: 'flex gap-0.5 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
       separator: 'mx-2',
       label: 'text-sm text-gray-200 mb-1.5 block',
       segmentWrapper: 'flex gap-0.5 items-center w-fit',
@@ -159,6 +164,7 @@ const DateRangeInput = forwardRef<ElementRef<typeof CalendarKit.DateRangeInput>,
 const DateInput = forwardRef<ElementRef<typeof CalendarKit.DateInput>, DateInputProps>((props, ref) => (
   <CalendarKit.DateInput
     ref={ref}
+    className="mx-auto"
     classNames={{
       root: 'text-sm text-gray-200',
       group: 'flex gap-0.5 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',

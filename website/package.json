@@ -10,16 +10,14 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "contentlayer": "^0.3.4",
     "framer-motion": "^11.2.4",
     "next": "14.2.3",
-    "next-contentlayer": "^0.3.4",
     "next-themes": "^0.3.0",
+    "nextra": "^2.13.4",
+    "nextra-theme-docs": "^2.13.4",
     "react": "18.2.0",
     "react-calendar-kit": "workspace:*",
     "react-dom": "18.2.0",
-    "rehype-slug": "^6.0.0",
-    "remark-gfm": "^4.0.0",
     "tailwind-merge": "^2.3.0",
     "tailwind-variants": "^0.2.1",
     "tailwindcss-gradient-border": "^1.0.1"

@@ -17,16 +17,20 @@ const buttonVariants = tv({
       link: 'text-primary underline-offset-4 hover:underline',
     },
     size: {
-      default: 'h-12 px-4 py-2',
+      default: 'h-10 px-4 py-2',
       sm: 'h-9 px-3',
-      lg: 'h-[50px] px-8',
+      lg: 'h-12 px-8 text-sm lg:h-[50px] lg:text-base',
       icon: 'h-10 w-10',
+    },
+    fullWidth: {
+      true: 'w-full',
     },
     rounded: {
       default: 'rounded-full',
     },
   },
   defaultVariants: {
+    fullWidth: true,
     variant: 'default',
     size: 'lg',
     rounded: 'default',
@@ -36,8 +40,10 @@ const buttonVariants = tv({
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'>, VariantProps<typeof buttonVariants> {}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, rounded, variant, size, ...props }, ref) => {
-    return <button className={cn(buttonVariants({ variant, size, rounded, className }))} ref={ref} {...props} />;
+  ({ className, rounded, fullWidth, variant, size, ...props }, ref) => {
+    return (
+      <button className={cn(buttonVariants({ variant, fullWidth, size, rounded, className }))} ref={ref} {...props} />
+    );
   }
 );
 Button.displayName = 'Button';

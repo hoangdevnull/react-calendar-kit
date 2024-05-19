@@ -63,12 +63,12 @@ export const paragraph = tv({
   variants: {
     size: {
       default: 'text-sm lg:text-base xl:text-lg',
-      sm: 'text-sm lg:text-base',
+      sm: 'text-xs md:text-sm lg:text-base',
       lg: 'text-base lg:text-lg xl:text-xl',
       xl: 'text-lg !leading-[160%] lg:text-xl xl:text-2xl',
     },
     color: {
-      default: 'text-foreground-50',
+      default: 'text-foreground',
       primary: 'text-primary-04',
     },
   },

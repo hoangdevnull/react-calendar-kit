@@ -1,6 +1,10 @@
-import { withContentlayer } from 'next-contentlayer';
+import withNextraBase from 'nextra';
 
-/** @type {import('next').NextConfig} */
+const withNextra = withNextraBase({
+  theme: 'nextra-theme-docs',
+  themeConfig: './theme.config.tsx',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -34,4 +38,4 @@ const nextConfig = {
   },
 };
 
-export default withContentlayer(nextConfig);
+export default withNextra(nextConfig);

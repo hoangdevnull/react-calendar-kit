@@ -36,7 +36,7 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
 
-  lib:
+  react-calendar-kit:
     dependencies:
       '@internationalized/date':
         specifier: ^3.5.3
@@ -77,12 +77,6 @@ importers:
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
       scroll-into-view-if-needed:
         specifier: ^3.1.0
         version: 3.1.0
@@ -131,7 +125,7 @@ importers:
         version: 18.2.0
       react-calendar-kit:
         specifier: workspace:*
-        version: link:../lib
+        version: link:../react-calendar-kit
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
@@ -174,7 +168,7 @@ importers:
         version: 18.2.0
       react-calendar-kit:
         specifier: workspace:*
-        version: link:../lib
+        version: link:../react-calendar-kit
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)

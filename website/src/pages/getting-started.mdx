@@ -7,6 +7,8 @@ React Calendar Kit is a powerful and flexible library for building accessible an
 <Steps>
 ### Install
 
+This package includes two peer dependencies, namely `@internationalised/date` and `@react-aria/i18n`, which are necessary for parsing the date as a value of the kit.
+
 <Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
   <Tab>
     ```bash
@@ -31,18 +33,49 @@ React Calendar Kit is a powerful and flexible library for building accessible an
   </Tab>
 </Tabs>
 
-### Add Calendar to your app
+### Add Core components to your app
 
-It can be placed anywhere, even in server components such as `layout.tsx`.
+It can be placed anywhere, even in server components such as `primitives.tsx`.
 
 ```tsx
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
-}
+import React, { forwardRef, type ElementRef } from 'react';
+import {
+  CalendarKit,
+  type CalendarProps,
+  type DateInputProps,
+  type DateRangeInputProps,
+  type RangeCalendarProps,
+  type TimeInputProps,
+} from 'react-calendar-kit';
+
+import { cn } from '../../utils';
+
+const Calendar = forwardRef<ElementRef<typeof CalendarKit.Calendar>, CalendarProps>((props, ref) => (
+  <CalendarKit.Calendar ref={ref} {...props} />
+));
+const RangeCalendar = forwardRef<ElementRef<typeof CalendarKit.RangeCalendar>, RangeCalendarProps>((props, ref) => (
+  <CalendarKit.RangeCalendar ref={ref} {...props} />
+));
+
+const DateRangeInput = forwardRef<ElementRef<typeof CalendarKit.DateRangeInput>, DateRangeInputProps>((props, ref) => (
+  <CalendarKit.DateRangeInput ref={ref} {...props} />
+));
+
+const DateInput = forwardRef<ElementRef<typeof CalendarKit.DateInput>, DateInputProps>((props, ref) => (
+  <CalendarKit.DateInput ref={ref} {...props} />
+));
+
+const TimeInput = forwardRef<ElementRef<typeof CalendarKit.TimeInput>, TimeInputProps>((props, ref) => (
+  <CalendarKit.TimeInput ref={ref} {...props} />
+));
+
+export const Primitives = {
+  RangeCalendar,
+  Calendar,
+  DateInput,
+  TimeInput,
+  DateRangeInput,
+};
 ```
 
 </Steps>

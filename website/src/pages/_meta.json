@@ -12,19 +12,19 @@
     "href": "/calendar"
   },
   "DateInput": {
-    "title": "DateInput",
+    "title": "Date Input",
     "href": "/date-input"
   },
   "TimeInput": {
-    "title": "timeInput",
+    "title": "Time Input",
     "href": "/time-input"
   },
   "DatePicker": {
-    "title": "DatePicker",
+    "title": "Date Picker",
     "href": "/date-picker"
   },
   "DateRangePicker": {
-    "title": "DateRangePicker",
+    "title": "Date Range Picker",
     "href": "/date-range-picker"
   },
   "-- More": {

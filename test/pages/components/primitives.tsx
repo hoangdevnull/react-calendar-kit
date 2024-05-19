@@ -1,10 +1,6 @@
 import React, { forwardRef, type ElementRef } from 'react';
 import {
-  Calendar as KitCalendar,
-  DateInput as KitDateInput,
-  DateRangeInput as KitDateRangeInput,
-  RangeCalendar as KitRangeCalendar,
-  TimeInput as KitTimeInput,
+  CalendarKit,
   type CalendarProps,
   type DateInputProps,
   type DateRangeInputProps,
@@ -14,8 +10,8 @@ import {
 
 import { cn } from '../../utils';
 
-const Calendar = forwardRef<ElementRef<typeof KitCalendar>, CalendarProps>((props, ref) => (
-  <KitCalendar
+const Calendar = forwardRef<ElementRef<typeof CalendarKit.Calendar>, CalendarProps>((props, ref) => (
+  <CalendarKit.Calendar
     ref={ref}
     classNames={{
       root: 'bg-gray-950 rounded-lg w-fit',
@@ -77,8 +73,8 @@ const Calendar = forwardRef<ElementRef<typeof KitCalendar>, CalendarProps>((prop
     {...props}
   />
 ));
-const RangeCalendar = forwardRef<ElementRef<typeof KitRangeCalendar>, RangeCalendarProps>((props, ref) => (
-  <KitRangeCalendar
+const RangeCalendar = forwardRef<ElementRef<typeof CalendarKit.RangeCalendar>, RangeCalendarProps>((props, ref) => (
+  <CalendarKit.RangeCalendar
     ref={ref}
     classNames={{
       root: 'bg-gray-950 rounded-lg',
@@ -144,8 +140,8 @@ const RangeCalendar = forwardRef<ElementRef<typeof KitRangeCalendar>, RangeCalen
   />
 ));
 
-const DateRangeInput = forwardRef<ElementRef<typeof KitDateRangeInput>, DateRangeInputProps>((props, ref) => (
-  <KitDateRangeInput
+const DateRangeInput = forwardRef<ElementRef<typeof CalendarKit.DateRangeInput>, DateRangeInputProps>((props, ref) => (
+  <CalendarKit.DateRangeInput
     ref={ref}
     classNames={{
       root: 'text-sm text-gray-200',
@@ -160,8 +156,8 @@ const DateRangeInput = forwardRef<ElementRef<typeof KitDateRangeInput>, DateRang
   />
 ));
 
-const DateInput = forwardRef<ElementRef<typeof KitDateInput>, DateInputProps>((props, ref) => (
-  <KitDateInput
+const DateInput = forwardRef<ElementRef<typeof CalendarKit.DateInput>, DateInputProps>((props, ref) => (
+  <CalendarKit.DateInput
     ref={ref}
     classNames={{
       root: 'text-sm text-gray-200',
@@ -175,8 +171,8 @@ const DateInput = forwardRef<ElementRef<typeof KitDateInput>, DateInputProps>((p
   />
 ));
 
-const TimeInput = forwardRef<ElementRef<typeof KitTimeInput>, TimeInputProps>((props, ref) => (
-  <KitTimeInput
+const TimeInput = forwardRef<ElementRef<typeof CalendarKit.TimeInput>, TimeInputProps>((props, ref) => (
+  <CalendarKit.TimeInput
     ref={ref}
     classNames={{
       root: 'text-sm',

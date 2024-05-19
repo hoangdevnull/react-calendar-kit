@@ -1,4 +1,4 @@
 packages:
   - 'website'
   - 'test'
-  - 'lib'
+  - 'react-calendar-kit'

@@ -22,8 +22,8 @@
     "dev": "tsup src --watch"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@internationalized/date": "^3.5.3",
+    "@react-aria/i18n": "^3.11.0"
   },
   "dependencies": {
     "@internationalized/date": "^3.5.3",

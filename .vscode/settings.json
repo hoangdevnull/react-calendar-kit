@@ -23,5 +23,5 @@
   ],
   "tailwindCSS.classAttributes": ["class", "className", "classNames"],
   "html.format.wrapAttributes": "auto",
-  "cSpell.words": ["datepicker", "hoangdevnull", "Hoverable", "sonner", "tailwindcss", "tsup"]
+  "cSpell.words": ["datepicker", "hoangdevnull", "Hoverable", "tailwindcss", "tsup"]
 }

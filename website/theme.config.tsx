@@ -9,7 +9,7 @@ const config: DocsThemeConfig = {
   docsRepositoryBase: 'https://github.com/HoangDevNull/react-calendar-kit/tree/main/website',
   useNextSeoProps() {
     return {
-      titleTemplate: '%s – Sonner',
+      titleTemplate: '%s – React Calendar Kit',
     };
   },
   feedback: {

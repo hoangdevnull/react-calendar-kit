@@ -6,6 +6,7 @@ import { VisuallyHidden } from '@react-aria/visually-hidden';
 
 import { cn, mergeStyles } from '../utils';
 import Button from './button';
+import { type CalendarHeaderLayout } from './calendar';
 import { useCalendarContext } from './calendar-context';
 import CalendarGrid from './calendar-grid';
 import CalendarHeader from './calendar-header';
@@ -14,13 +15,14 @@ import ChevronRightIcon from './icons/chevron-right-icon';
 import CalendarPicker from './picker/calendar-picker';
 
 export interface CalendarRootProps extends CalendarAria {
+  headerLayout?: CalendarHeaderLayout;
   className?: string;
   header?: ReactNode;
   footer?: ReactNode;
 }
 
 const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTMLDivElement>) => {
-  const { calendarProps, className, prevButtonProps, nextButtonProps, header, footer } = props;
+  const { calendarProps, headerLayout = 'apart', className, prevButtonProps, nextButtonProps, header, footer } = props;
 
   const { state, visibleMonths, classNames, withPicker, pickerHeight, isPickerExpanded, styles } = useCalendarContext();
 
@@ -35,7 +37,7 @@ const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTM
     for (let i = 0; i < visibleMonths; i++) {
       let date = currentMonth.add({ months: i });
 
-      headers.push(
+      const apartLayout = (
         <Fragment key={`calendar-header-${i}`}>
           {i === 0 && (
             <Button
@@ -46,7 +48,7 @@ const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTM
               {isRtl ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </Button>
           )}
-          <CalendarHeader currentMonth={currentMonth} date={date} />
+          <CalendarHeader data-layout={headerLayout} currentMonth={currentMonth} date={date} />
           {i === visibleMonths - 1 && (
             <Button
               {...nextButtonProps}
@@ -58,6 +60,26 @@ const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTM
           )}
         </Fragment>
       );
+
+      const buttonGroup = (
+        <div className={classNames.navGroup} style={styles?.navGroup}>
+          <Button {...prevButtonProps} className={cn(classNames.nav, classNames.nextButton)} role="next-button">
+            <ChevronLeftIcon />
+          </Button>
+          <Button {...nextButtonProps} className={cn(classNames.nav, classNames.previousButton)} role="previous-button">
+            <ChevronRightIcon />
+          </Button>
+        </div>
+      );
+
+      const leftOrRightLayout = (
+        <Fragment key={`calendar-header-${i}`}>
+          {headerLayout === 'left' ? buttonGroup : null}
+          <CalendarHeader data-layout={headerLayout} currentMonth={currentMonth} date={date} />
+          {headerLayout === 'right' ? buttonGroup : null}
+        </Fragment>
+      );
+      headers.push(headerLayout === 'apart' ? apartLayout : leftOrRightLayout);
 
       const calendarMonthContent = withPicker ? (
         <div key={`calendar-month-${i}`} className={classNames.gridGroup} role="calendar-month-group">
@@ -73,7 +95,22 @@ const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTM
     }
 
     return { headers, calendars };
-  }, [visibleMonths, props, withPicker, currentMonth, prevButtonProps, nextButtonProps, classNames, isRtl]);
+  }, [
+    visibleMonths,
+    currentMonth,
+    prevButtonProps,
+    classNames?.nav,
+    classNames?.nextButton,
+    classNames?.previousButton,
+    classNames?.navGroup,
+    classNames?.gridGroup,
+    isRtl,
+    nextButtonProps,
+    headerLayout,
+    styles?.navGroup,
+    withPicker,
+    props,
+  ]);
 
   return (
     <div

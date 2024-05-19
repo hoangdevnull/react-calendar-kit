@@ -1,6 +1,6 @@
 import React from 'react';
 import { Roboto } from 'next/font/google';
-import { useDateRangePicker } from 'calendar-kit';
+import { useDateRangePicker } from 'react-calendar-kit';
 
 import CalendarButton from './components/calendar-button';
 import { Primitives } from './components/primitives';

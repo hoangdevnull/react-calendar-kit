@@ -10,8 +10,15 @@ import { type SupportedCalendars } from '../types/common.types';
 import { CalendarProvider, type CalendarClassNames, type CalendarStyles } from './calendar-context';
 import CalendarRoot, { type CalendarRootProps } from './calendar-root';
 
+export type CalendarHeaderLayout = 'apart' | 'left' | 'right';
 interface Props<T extends DateValue> extends AriaCalendarProps<T>, Pick<CalendarRootProps, 'header' | 'footer'> {
   createCalendar?: (calendar: SupportedCalendars) => CalendarType | null;
+
+  /**
+   * The layout of the header
+   */
+  headerLayout?: CalendarHeaderLayout;
+
   /**
    * The style of the weekday labels.
    */
@@ -79,6 +86,7 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
     pickerOpen,
     defaultPickerOpen = false,
     onPickerOpenChange,
+    headerLayout,
     ...etc
   } = props;
 
@@ -129,6 +137,7 @@ function Calendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDi
         title={title}
         errorMessageProps={errorMessageProps}
         className={className}
+        headerLayout={headerLayout}
         {...etc}
       />
     </CalendarProvider>

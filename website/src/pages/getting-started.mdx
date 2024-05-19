@@ -35,9 +35,9 @@ This package includes two peer dependencies, namely `@internationalised/date` an
 
 ### Add Core components to your app
 
-It can be placed anywhere, even in server components such as `primitives.tsx`.
+It can be placed anywhere, even in server components such as `ui/primitives.tsx`.
 
-```tsx
+```tsx copy
 import React, { forwardRef, type ElementRef } from 'react';
 import {
   CalendarKit,
@@ -69,7 +69,7 @@ const TimeInput = forwardRef<ElementRef<typeof CalendarKit.TimeInput>, TimeInput
   <CalendarKit.TimeInput ref={ref} {...props} />
 ));
 
-export const Primitives = {
+export const CK = {
   RangeCalendar,
   Calendar,
   DateInput,
@@ -77,5 +77,13 @@ export const Primitives = {
   DateRangeInput,
 };
 ```
+
+### Customize Component Styles
+
+React Calendar Kit components are intentionally unstyled by default. This design choice gives you the freedom to apply your own styles and seamlessly integrate the calendar into the aesthetic of your application.
+
+To get started with styling, visit our comprehensive [Style Guide](/styling). The guide provides detailed instructions and best practices for customizing the look and feel of your calendar components.
+
+Whether you prefer to use plain CSS, a preprocessor like SCSS, or a CSS-in-JS library, our examples will help you apply the styles that best suit your needs. Additionally, the guide includes tips for theming, handling state-based styles, and ensuring that your calendar remains accessible and responsive.
 
 </Steps>

@@ -1,4 +1,4 @@
-import './globals.css';
+import '@/themes/globals.css';
 
 import { type Metadata, type Viewport } from 'next';
 import clsx from 'clsx';

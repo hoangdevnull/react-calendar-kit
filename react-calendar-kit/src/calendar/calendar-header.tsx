@@ -14,7 +14,7 @@ export interface CalendarHeaderProps extends ElementProps<'div'> {
 }
 
 const CalendarHeader = (props: CalendarHeaderProps) => {
-  const { date, currentMonth } = props;
+  const { date, currentMonth, ...etc } = props;
 
   const { state, headerRef, withPicker, classNames, styles, isPickerExpanded, setPickerExpanded } =
     useCalendarContext();
@@ -41,7 +41,7 @@ const CalendarHeader = (props: CalendarHeaderProps) => {
   );
 
   return withPicker ? (
-    <div className={classNames.month} style={styles?.month} ref={headerRef}>
+    <div className={classNames.month} style={styles?.month} ref={headerRef} {...etc}>
       <Button
         onPress={() => setPickerExpanded(!isPickerExpanded)}
         onKeyDown={handleKeyDown}
@@ -63,7 +63,7 @@ const CalendarHeader = (props: CalendarHeaderProps) => {
       </Button>
     </div>
   ) : (
-    <div className={classNames.month} style={styles?.month} ref={headerRef}>
+    <div className={classNames.month} style={styles?.month} ref={headerRef} {...etc}>
       <span key={currentMonth.month} aria-hidden={true}>
         {monthDateContent}
       </span>

@@ -1,0 +1,48 @@
+import { Card, Cards, Steps, Tab, Tabs } from 'nextra-theme-docs';
+
+# Getting Started
+
+React Calendar Kit is a powerful and flexible library for building accessible and highly customizable calendar and date/time picker components in your React applications. Built on top of the robust accessibility features of the [@react-aria](https://react-spectrum.adobe.com/react-aria/index.html) library, React Calendar Kit provides a solid foundation for creating inclusive user experiences.
+
+<Steps>
+### Install
+
+<Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
+  <Tab>
+    ```bash
+    pnpm i react-calendar-kit
+    ```
+
+  </Tab>
+  <Tab>
+    ```bash
+    npm i react-calendar-kit
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    yarn add react-calendar-kit
+    ```
+  </Tab>
+    <Tab>
+    ```bash
+    bun add react-calendar-kit
+    ```
+  </Tab>
+</Tabs>
+
+### Add Calendar to your app
+
+It can be placed anywhere, even in server components such as `layout.tsx`.
+
+```tsx
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+</Steps>

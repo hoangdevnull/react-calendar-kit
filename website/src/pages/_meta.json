@@ -1,0 +1,38 @@
+{
+  "getting-started": {
+    "title": "Getting Started",
+    "href": "/getting-started"
+  },
+  "-- API": {
+    "type": "separator",
+    "title": "API"
+  },
+  "Calendar": {
+    "title": "Calendar",
+    "href": "/calendar"
+  },
+  "DateInput": {
+    "title": "DateInput",
+    "href": "/date-input"
+  },
+  "TimeInput": {
+    "title": "timeInput",
+    "href": "/time-input"
+  },
+  "DatePicker": {
+    "title": "DatePicker",
+    "href": "/date-picker"
+  },
+  "DateRangePicker": {
+    "title": "DateRangePicker",
+    "href": "/date-range-picker"
+  },
+  "-- More": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "styling": {
+    "title": "Styling",
+    "href": "/styling"
+  }
+}

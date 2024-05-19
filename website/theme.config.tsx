@@ -2,16 +2,29 @@ import React from 'react';
 import { type DocsThemeConfig } from 'nextra-theme-docs';
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <span>React Calendar Kit</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/HoangDevNull/react-calendar-kit',
   },
-  chat: {
-    link: 'https://discord.com',
+  docsRepositoryBase: 'https://github.com/HoangDevNull/react-calendar-kit/tree/main/website',
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Sonner',
+    };
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  feedback: {
+    content: null,
+  },
   footer: {
-    text: 'Nextra Docs Template',
+    text: (
+      <span>
+        MIT {new Date().getFullYear()} ©{' '}
+        <a href="https://github.com/HoangDevNull" target="_blank">
+          HoangDevNull
+        </a>
+        .
+      </span>
+    ),
   },
 };
 

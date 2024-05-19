@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Icons } from '@/assets/icons';
 
 import { Button } from '@/components/ui/button';
@@ -57,11 +58,20 @@ const HomePage = () => {
           <div className={subtitle({ className: 'text-center' })}>Accessible and Customizable Calendar Components</div>
 
           <HStack noWrap={{ initial: false, sm: true }}>
-            <Button>Documents</Button>
-            <Button variant="secondary">
-              <Icons.github />
-              Github
-            </Button>
+            <Link className="w-full" href="/getting-started">
+              <Button>Documents</Button>
+            </Link>
+            <Link
+              className="w-full"
+              href="http://github.com/react-calendar-kit/react-calendar-kit"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="secondary">
+                <Icons.github />
+                Github
+              </Button>
+            </Link>
           </HStack>
 
           <NpmBox />

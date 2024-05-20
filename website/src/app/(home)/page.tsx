@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Icons } from '@/assets/icons';
 
+import { siteConfig } from '@/config/site';
 import { Button } from '@/components/ui/button';
 import { HStack } from '@/components/h-stack';
 import { container, subtitle } from '@/components/primitives';
@@ -62,12 +63,7 @@ const HomePage = () => {
             <Link className="w-full" href="/getting-started">
               <Button>Documents</Button>
             </Link>
-            <Link
-              className="w-full"
-              href="http://github.com/react-calendar-kit/react-calendar-kit"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link className="w-full" href={siteConfig.github} target="_blank" rel="noopener noreferrer">
               <Button variant="secondary">
                 <Icons.github />
                 Github

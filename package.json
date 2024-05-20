@@ -6,7 +6,7 @@
     "dev": "pnpm -F react-calendar-kit build --watch",
     "dev:preview": "pnpm -F react-calendar-kit-tests dev",
     "dev:docs": "pnpm -F react-calendar-kit-website dev",
-    "build:docs": "pnpm -F react-calendar-kit-website build",
+    "build:docs": "pnpm -F react-calendar-kit build && pnpm -F react-calendar-kit-website build",
     "start:docs": "pnpm -F react-calendar-kit-website start",
     "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
     "preinstall": "npx only-allow pnpm",

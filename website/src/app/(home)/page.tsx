@@ -8,6 +8,7 @@ import { HStack } from '@/components/h-stack';
 import { container, subtitle } from '@/components/primitives';
 import { VStack } from '@/components/v-stack';
 
+import { CalendarMain } from './components/CalendarMain';
 import { FeatureCard } from './components/FeatureCard';
 import NpmBox from './components/NpmBox';
 
@@ -49,7 +50,7 @@ const HomePage = () => {
         className="inset-x-center pointer-events-none top-0 max-h-screen"
       />
 
-      <div className={container({ size: 'sm' })}>
+      <div className={container({ size: 'sm', className: 'z-10 relative' })}>
         {/* <BackgroundBeams className="z-[-1]" /> */}
         <VStack spacing={24} align="center">
           <h1 className="bg-gradient-text bg-clip-text pt-12 text-center font-mono text-2xl uppercase text-transparent sm:text-3xl md:text-4xl lg:text-6xl">
@@ -85,12 +86,17 @@ const HomePage = () => {
         </VStack>
       </div>
 
-      <div className={container({ size: '2xl', className: 'mt-14' })}>
+      <div className={container({ size: '2xl', className: 'mt-14 z-10 relative ' })}>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature, index) => (
             <FeatureCard {...feature} key={index} />
           ))}
         </div>
+      </div>
+
+      <div className="relative z-10 mt-20 flex flex-wrap items-stretch justify-center gap-8">
+        <CalendarMain headerLayout="left" />
+        <CalendarMain withPicker />
       </div>
     </section>
   );

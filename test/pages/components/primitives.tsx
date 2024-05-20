@@ -1,3 +1,5 @@
+'use client';
+
 import React, { forwardRef, type ElementRef } from 'react';
 import {
   CalendarKit,

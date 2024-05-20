@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { fontMono, fontSans } from '@/config/fonts';
 import { APP_URL, siteConfig } from '@/config/site';
+import { container } from '@/components/primitives';
 
 import { Providers } from './providers';
 
@@ -69,6 +70,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers attribute="class" defaultTheme="dark">
           {children}
         </Providers>
+
+        <footer className={container({ size: '2xl', className: 'mt-16 border-t border-gray-600 text-center py-6' })}>
+          <span className="text-sm">
+            MIT {new Date().getFullYear()} ©{' '}
+            <a href="https://github.com/HoangDevNull" target="_blank">
+              HoangDevNull
+            </a>
+            .
+          </span>
+        </footer>
       </body>
     </html>
   );

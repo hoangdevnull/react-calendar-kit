@@ -5,36 +5,36 @@ import type { CalendarState, RangeCalendarState } from '@react-stately/calendar'
 import { createSafeContext } from '../utils/create-safe-context';
 
 export type CalendarClassNames = {
-  nav?: string;
-  navGroup?: string;
-  nextButton?: string;
-  previousButton?: string;
-  month?: string;
-  root?: string;
-  container?: string;
-  gridWrapper?: string;
-  gridGroup?: string;
-  header?: string;
-  grid?: string;
-  gridHead?: string;
-  gridHeadRow?: string;
-  gridHeadCell?: string;
-  gridBody?: string;
-  gridBodyRow?: string;
-  gridBodyCell?: string;
-  cellButton?: string;
+  nav?: string | undefined;
+  navGroup?: string | undefined;
+  nextButton?: string | undefined;
+  previousButton?: string | undefined;
+  month?: string | undefined;
+  root?: string | undefined;
+  container?: string | undefined;
+  gridWrapper?: string | undefined;
+  gridGroup?: string | undefined;
+  header?: string | undefined;
+  grid?: string | undefined;
+  gridHead?: string | undefined;
+  gridHeadRow?: string | undefined;
+  gridHeadCell?: string | undefined;
+  gridBody?: string | undefined;
+  gridBodyRow?: string | undefined;
+  gridBodyCell?: string | undefined;
+  cellButton?: string | undefined;
 
   picker?: {
-    root?: string;
-    button?: string;
-    buttonIcon?: string;
-    highlight?: string;
-    list?: string;
-    monthList?: string;
-    yearList?: string;
-    item?: string;
-    monthItem?: string;
-    yearItem?: string;
+    root?: string | undefined;
+    button?: string | undefined;
+    buttonIcon?: string | undefined;
+    highlight?: string | undefined;
+    list?: string | undefined;
+    monthList?: string | undefined;
+    yearList?: string | undefined;
+    item?: string | undefined;
+    monthItem?: string | undefined;
+    yearItem?: string | undefined;
   };
 };
 

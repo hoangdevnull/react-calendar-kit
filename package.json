@@ -21,7 +21,7 @@
     "@playwright/test": "1.41.1",
     "husky": "^8.0.1",
     "lint-staged": "15.2.0",
-    "next": "13.5.1",
+    "next": "14.2.3",
     "prettier": "2.7.1",
     "tsup": "8.0.1",
     "typescript": "5.1.6"

@@ -1,6 +1,6 @@
 export type SiteConfig = typeof siteConfig;
 
-export const APP_URL = 'https://www.react-calendar-kit.vercel.app';
+export const APP_URL = 'https://react-calendar-kit.vercel.app';
 
 export const siteConfig = {
   name: 'React-Calendar-kit - Documentation',

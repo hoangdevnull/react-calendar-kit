@@ -61,5 +61,15 @@
   "author": {
     "name": "HoangDevNull",
     "url": "https://github.com/HoangDevNull"
-  }
+  },
+  "keywords": [
+    "datepicker",
+    "picker",
+    "date-input",
+    "time-input",
+    "react-aria",
+    "component",
+    "ui",
+    "ux"
+  ]
 }

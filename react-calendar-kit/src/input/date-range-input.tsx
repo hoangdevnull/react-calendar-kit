@@ -14,7 +14,7 @@ import type { InputClassNames, InputStyles } from '../types/theme.types';
 import DateInputGroup, { type DateInputGroupProps } from './date-input-group';
 import DateRangeField, { type DateRangeFieldProps } from './date-range-field';
 
-interface Props<T extends DateValue>
+interface Props<T extends DateValue = DateValue>
   extends Pick<DateInputGroupProps, 'children' | 'startContent' | 'endContent' | 'labelProps' | 'groupProps'> {
   state: DateRangePickerState;
   getStartDateFieldProps: DateRangeFieldProps<T>;
@@ -27,7 +27,7 @@ interface Props<T extends DateValue>
   separator?: ReactNode;
 }
 
-const DateRangeInput = <T extends DateValue>(props: Props<T>, ref: Ref<ElementRef<'div'>>) => {
+const DateRangeInput = <T extends DateValue = DateValue>(props: Props<T>, ref: Ref<ElementRef<'div'>>) => {
   const {
     state,
     label,

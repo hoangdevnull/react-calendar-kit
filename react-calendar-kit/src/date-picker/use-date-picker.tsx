@@ -1,7 +1,7 @@
 import { useRef, type MutableRefObject } from 'react';
-import { CalendarDate } from '@internationalized/date';
+import { CalendarDate, type DateValue } from '@internationalized/date';
 import type { AriaButtonProps } from '@react-aria/button';
-import { useDatePicker as useAriaDatePicker, type AriaDatePickerProps, type DateValue } from '@react-aria/datepicker';
+import { useDatePicker as useAriaDatePicker, type AriaDatePickerProps } from '@react-aria/datepicker';
 import { mergeProps } from '@react-aria/utils';
 import { useDatePickerState, type DatePickerState } from '@react-stately/datepicker';
 import type { CalendarProps } from '@react-types/calendar';
@@ -12,13 +12,13 @@ import type { TimeInputProps } from '../input/time-input';
 import type { ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
 
-export interface UseDatePickerProps<T extends DateValue> extends AriaDatePickerProps<T> {
+export interface UseDatePickerProps<T extends DateValue = DateValue> extends AriaDatePickerProps<T> {
   dateInputProps?: CalendarProps<T>;
   calendarProps?: CalendarProps<T>;
   timeInputProps?: TimeInputProps;
 }
 
-type GetDateInputProps<T extends DateValue> = AriaDatePickerProps<T> & {
+type GetDateInputProps<T extends DateValue = DateValue> = AriaDatePickerProps<T> & {
   groupProps: GroupDOMAttributes;
   labelProps: DOMAttributes;
 };

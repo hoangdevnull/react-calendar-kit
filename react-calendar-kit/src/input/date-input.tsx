@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, type CSSProperties, type ElementRef, type ReactElement, type Ref } from 'react';
-import { CalendarDate, createCalendar, type Calendar } from '@internationalized/date';
-import { useDateField, type AriaDateFieldProps, type DateValue } from '@react-aria/datepicker';
+import { CalendarDate, createCalendar, type Calendar, type DateValue } from '@internationalized/date';
+import { useDateField, type AriaDateFieldProps } from '@react-aria/datepicker';
 import { useLocale } from '@react-aria/i18n';
 import { filterDOMProps, mergeProps } from '@react-aria/utils';
 import { useDateFieldState } from '@react-stately/datepicker';
@@ -11,7 +11,7 @@ import type { InputClassNames, InputStyles } from '../types/theme.types';
 import DateField, { type DateFieldProps } from './date-field';
 import DateInputGroup, { type DateInputGroupProps } from './date-input-group';
 
-interface Props<T extends DateValue>
+interface Props<T extends DateValue = DateValue>
   extends AriaDateFieldProps<T>,
     Pick<DateFieldProps, 'inputProps' | 'fieldProps' | 'segmentProps' | 'formatSegment'>,
     Pick<DateInputGroupProps, 'children' | 'startContent' | 'endContent' | 'labelProps' | 'groupProps'> {
@@ -22,7 +22,7 @@ interface Props<T extends DateValue>
   createCalendar?: (calendar: SupportedCalendars) => Calendar | null;
 }
 
-const DateInput = <T extends DateValue>(props: Props<T>, inputRef: Ref<ElementRef<'div'>>) => {
+const DateInput = <T extends DateValue = DateValue>(props: Props<T>, inputRef: Ref<ElementRef<'div'>>) => {
   const {
     groupProps: groupPropsProp = {},
     labelProps: labelPropsProp = {},

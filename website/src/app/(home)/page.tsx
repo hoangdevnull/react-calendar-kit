@@ -86,7 +86,7 @@ const HomePage = () => {
       </div>
 
       <div className={container({ size: '2xl', className: 'mt-14' })}>
-        <div className="grid gap-6 md:grid-cols-2 2xl:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature, index) => (
             <FeatureCard {...feature} key={index} />
           ))}

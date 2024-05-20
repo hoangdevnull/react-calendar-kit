@@ -1,12 +1,8 @@
 import { useRef, type MutableRefObject } from 'react';
 import type React from 'react';
-import { CalendarDate } from '@internationalized/date';
+import { CalendarDate, type DateValue } from '@internationalized/date';
 import type { AriaButtonProps } from '@react-aria/button';
-import {
-  useDateRangePicker as useAriaDateRangePicker,
-  type AriaDateRangePickerProps,
-  type DateValue,
-} from '@react-aria/datepicker';
+import { useDateRangePicker as useAriaDateRangePicker, type AriaDateRangePickerProps } from '@react-aria/datepicker';
 import { mergeProps } from '@react-aria/utils';
 import { useDateRangePickerState, type DateRangePickerState } from '@react-stately/datepicker';
 import type { CalendarProps } from '@react-types/calendar';
@@ -19,12 +15,12 @@ import type { TimeInputProps } from '../input/time-input';
 import type { ElementProps } from '../types/common.types';
 import { withAttr } from '../utils';
 
-export interface UseDateRangePickerProps<T extends DateValue> extends AriaDateRangePickerProps<T> {
+export interface UseDateRangePickerProps<T extends DateValue = DateValue> extends AriaDateRangePickerProps<T> {
   dateInputProps?: CalendarProps<T>;
   calendarProps?: RangeCalendarProps<T>;
   timeInputProps?: TimeInputProps;
 }
-type UseDateRangePickerReturn<T extends DateValue> = {
+type UseDateRangePickerReturn<T extends DateValue = DateValue> = {
   ref: MutableRefObject<HTMLDivElement>;
   state: DateRangePickerState;
   getTriggerProps: ElementProps<'button'>;

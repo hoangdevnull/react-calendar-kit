@@ -7,23 +7,23 @@
     "type": "separator",
     "title": "API"
   },
-  "Calendar": {
+  "calendar": {
     "title": "Calendar",
     "href": "/calendar"
   },
-  "DateInput": {
+  "date-input": {
     "title": "Date Input",
     "href": "/date-input"
   },
-  "TimeInput": {
+  "time-input": {
     "title": "Time Input",
     "href": "/time-input"
   },
-  "DatePicker": {
+  "date-picker": {
     "title": "Date Picker",
     "href": "/date-picker"
   },
-  "DateRangePicker": {
+  "date-range-picker": {
     "title": "Date Range Picker",
     "href": "/date-range-picker"
   },

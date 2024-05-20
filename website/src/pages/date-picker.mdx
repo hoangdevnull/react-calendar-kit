@@ -1,0 +1,78 @@
+---
+title: Date Picker
+---
+
+import DatePicker from '@/docs/date-picker';
+
+# Date Picker
+
+<div className="my-8">
+  <DatePicker />
+</div>
+
+DatePickers combine a `DateInput` and a `Calendar` to allow users to enter or select a date and time value.
+
+For better customization we only expose the `useDatePicker` hook to let use have a free way to use your own styles
+
+## API Reference
+
+### TimeInput Props
+
+| Property                | Type                                              |                                                             Description                                                              | Default |
+| :---------------------- | :------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------: | ------: |
+| label                   | `ReactNode`                                       |                                                 The content to display as the label.                                                 |       - |
+| value                   | `DateValue`                                       |                                          The current value of the date input (controlled).                                           |       - |
+| defaultValue            | `DateValue`                                       |                                         The default value of the date input (uncontrolled).                                          |       - |
+| placeholderValue        | `DateValue`                                       | A placeholder time that influences the format of the placeholder shown when no value is selected. Defaults current date at midnight. |       - |
+| minValue                | `DateValue`                                       |                                           The minimum allowed date that a user may select.                                           |       - |
+| maxValue                | `DateValue`                                       |                                           The maximum allowed date that a user may select.                                           |       - |
+| locale                  | `string`                                          |                                        The locale to display and edit the value according to.                                        |       - |
+| errorMessage            | `ReactNode \| (v: ValidationResult) => ReactNode` |                                                 An error message for the date input.                                                 |       - |
+| startContent            | `ReactNode`                                       |                                      Element to be rendered in the left side of the date input.                                      |       - |
+| endContent              | `ReactNode`                                       |                                     Element to be rendered in the right side of the date input.                                      |       - |
+| isRequired              | `boolean`                                         |                                 Whether user input is required on the input before form submission.                                  | `false` |
+| isReadOnly              | `boolean`                                         |                                    Whether the input can be selected but not changed by the user.                                    |       - |
+| isDisabled              | `boolean`                                         |                                                    Whether the input is disabled.                                                    | `false` |
+| isInvalid               | `boolean`                                         |                                                 Whether the input value is invalid.                                                  | `false` |
+| createCalendar          | `(name: string) => Calendar`                      |                              A function that creates a Calendar object for a given calendar identifier.                              |       - |
+| isDateUnavailable       | `(date: DateValue) => boolean`                    |               Callback that is called for each date of the calendar. If it returns true, then the date is unavailable.               |       - |
+| autoFocus               | `boolean`                                         |                                         Whether the element should receive focus on render.                                          | `false` |
+| hourCycle               | `12` \| `24`                                      |                    Whether to display the time in 12 or 24 hour format. This is determined by the user's locale.                     |       - |
+| granularity             | `hour` \| `minute` \| `second`                    |                    Determines the smallest unit that is displayed in the date picker. Typically "day" for dates.                     |       - |
+| hideTimeZone            | `boolean`                                         |                                             Whether to hide the time zone abbreviation.                                              | `false` |
+| shouldForceLeadingZeros | `boolean`                                         |                               Whether to always show leading zeros in the month, day, and hour fields.                               |  `true` |
+| open                    | `boolean`                                         |                                                      Open the calendar picker.                                                       |     `-` |
+| defaultOpen             | `boolean`                                         |                                       Open the calendar picker for default - (uncountrolled).                                        |     `-` |
+| onOpenChange            | `(open: boolean) => void;`                        |                                                    Trigger when open state Change                                                    |     `-` |
+| dateInputProps          | `DateInputProps`                                  |                                        Props to be passed to the time `DateInput` component.                                         |     `-` |
+| calendarProps           | `CalendarProps`                                   |                                         Props to be passed to the time `Calendar` component.                                         |     `-` |
+| timeInputProps          | `TimeInputProps`                                  |                                        Props to be passed to the time `TimeInput` component.                                         |     `-` |
+
+## Usage
+
+To use the `DatePicker` component, import `useDatePicker` from the library and use it like below.
+
+```tsx
+import React from 'react';
+import { useDatePicker, type UseDatePickerProps } from 'react-calendar-kit';
+
+import CalendarButton from './calendar-button';
+import { CK } from './calendar-primitives';
+
+const DatePicker = (props: UseDatePickerProps) => {
+  const { ref, state, getCalendarProps, getDateInputProps, getDialogProps, getTriggerProps } = useDatePicker(props);
+
+  return (
+    <div>
+      <CK.DateInput {...getDateInputProps} ref={ref} endContent={<CalendarButton {...getTriggerProps} />} />
+      {state.isOpen ? (
+        <div {...getDialogProps}>
+          <CK.Calendar {...getCalendarProps} visibleMonths={1} weekdayStyle="short" withPicker />
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+export default DatePicker;
+```

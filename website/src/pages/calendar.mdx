@@ -1,0 +1,48 @@
+---
+title: Calendar
+---
+
+import { CK } from '@/docs/calendar-primitives';
+
+# Calendar
+
+<CK.Calendar withPicker className="my-8" />
+
+A calendar consists of a grouping element containing one or more date grids (e.g. months), and a previous and next button for navigating between date ranges. Each calendar grid consists of cells containing button elements that can be pressed and navigated to using the arrow keys to select a date.
+
+## API Reference
+
+| Property            | Type                                        |                                                       Description                                                       |                          Default |
+| :------------------ | :------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------: | -------------------------------: |
+| value               | `DateValue \| null`                         |                                             The current value (controlled).                                             |                              `-` |
+| defaultValue        | `DateValue \| null`                         |                                            The default value (uncontrolled).                                            |                              `-` |
+| minValue            | `DateValue`                                 |                                    The minimum allowed date that a user may select.                                     |   `new CalendarDate(1900, 1, 1)` |
+| maxValue            | `DateValue`                                 |                                    The maximum allowed date that a user may select.                                     | `new CalendarDate(2099, 12, 31)` |
+| visibleMonths       | `number`                                    |                         The number of months to display at once. Up to 3 months are supported.                          |                              `1` |
+| focusedValue        | `DateValue`                                 |                                Controls the currently focused date within the calendar.                                 |                              `-` |
+| defaultFocusedValue | `DateValue`                                 |                        The date that is focused when the calendar first mounts (uncountrolled).                         |                              `-` |
+| weekdayStyle        | `narrow` \|`short` \| `long` \| `undefined` | The style of weekday names to display in the calendar grid header, e.g. single letter, abbreviation, or full day name.  |                          `short` |
+| withPicker          | `boolean`                                   |                                    Change the month label to picker for interactive                                     |                          `false` |
+| pickerHeight        | `number`                                    | The calendar height when the calendar picker is open. Prefer choose minimum height when the calendar picker is not open |                            `278` |
+| pickerEmptyItem     | `number`                                    |                      Number of empty item to display in the month picker to force list scrollable                       |                              `3` |
+| pickerOpen          | `boolean`                                   |                                                Open the calendar picker.                                                |                              `-` |
+| defaultPickerOpen   | `boolean`                                   |                                 Open the calendar picker for default - (uncountrolled).                                 |                              `-` |
+| onPickerOpenChange  | `(open: boolean) => void;`                  |                                          Trigger when pickerOpen State Change                                           |                              `-` |
+| isDisabled          | `boolean`                                   |                                            Whether the calendar is disabled.                                            |                          `false` |
+| isReadOnly          | `boolean`                                   |                                        Whether the calendar value is immutable.                                         |                          `false` |
+| isInvalid           | `boolean`                                   |                        Whether the current selection is invalid according to application logic.                         |                          `false` |
+| headerLayout        | `apart` \| `left` \| `right`                |                                                The layout of the header                                                 |                          `apart` |
+| header              | `ReactNode`                                 |                                    Element to be rendered in the top of the calendar                                    |                              `-` |
+| footer              | `ReactNode`                                 |                                Element to be rendered in the bottom side of the calendar                                |                              `-` |
+| classNames          | `CalendarClassNames`                        |                                      ClassName for each components in the calendar                                      |                              `-` |
+| styles              | `CalendarStyles`                            |                                       Styles for each components in the calendar                                        |                              `-` |
+
+## Usage
+
+To use the `Calendar` component, import it from the library and include it in your JSX code:
+
+```jsx
+import { Calendar } from 'react-calendar-kit';
+
+<Calendar />;
+```

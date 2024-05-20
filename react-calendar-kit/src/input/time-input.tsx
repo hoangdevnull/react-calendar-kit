@@ -9,7 +9,7 @@ import type { InputClassNames, InputStyles } from '../types/theme.types';
 import DateField, { type DateFieldProps } from './date-field';
 import DateInputGroup, { type DateInputGroupProps } from './date-input-group';
 
-interface Props<T extends TimeValue>
+interface Props<T extends TimeValue = TimeValue>
   extends AriaTimeFieldProps<T>,
     Pick<DateFieldProps, 'inputProps' | 'fieldProps' | 'segmentProps' | 'formatSegment'>,
     Pick<DateInputGroupProps, 'children' | 'startContent' | 'endContent' | 'labelProps' | 'groupProps'> {
@@ -19,7 +19,7 @@ interface Props<T extends TimeValue>
   style?: CSSProperties;
 }
 
-const TimeInput = <T extends TimeValue>(props: Props<T>, inputRef: Ref<ElementRef<'div'>>) => {
+const TimeInput = <T extends TimeValue = TimeValue>(props: Props<T>, inputRef: Ref<ElementRef<'div'>>) => {
   const {
     groupProps: groupPropsProp = {},
     labelProps: labelPropsProp = {},

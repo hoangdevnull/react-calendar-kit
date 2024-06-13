@@ -60,9 +60,11 @@ const DateRangeInput = <T extends DateValue = DateValue>(props: Props<T>, ref: R
       ref={ref}
       {...groupProps}
     >
-      <DateRangeField {...getStartDateFieldProps} classNames={classNames} styles={styles} />
-      {separator}
-      <DateRangeField {...getEndDateFieldProps} classNames={classNames} styles={styles} />
+      <div className={classNames.rangeGroup}>
+        <DateRangeField {...getStartDateFieldProps} classNames={classNames} styles={styles} />
+        {separator}
+        <DateRangeField {...getEndDateFieldProps} classNames={classNames} styles={styles} />
+      </div>
       {children}
     </DateInputGroup>
   );

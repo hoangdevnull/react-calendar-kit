@@ -23,3 +23,5 @@ export type { UseDateRangePickerProps } from './date-picker/use-date-range-picke
 export type { DateInputProps } from './input/date-input';
 export type { DateRangeInputProps } from './input/date-range-input';
 export type { TimeInputProps } from './input/time-input';
+export type { RangeValue } from '@react-types/shared';
+export type { DateValue, TimeValue, DateRange } from '@react-aria/datepicker';

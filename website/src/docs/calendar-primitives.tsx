@@ -149,9 +149,9 @@ const DateRangeInput = forwardRef<ElementRef<typeof CalendarKit.DateRangeInput>,
   <CalendarKit.DateRangeInput
     ref={ref}
     classNames={{
-      root: 'text-sm text-gray-200',
-      rangeGroup: 'flex items-center',
-      group: 'flex gap-0.5 items-center border border-gray-400 w-fit px-3 py-2 rounded-md',
+      root: 'text-sm text-gray-200 max-w-full',
+      rangeGroup: 'flex items-center max-w-full overflow-auto scrollbar-hide',
+      group: 'flex gap-0.5 items-center border border-gray-400 w-fit px-3 py-2 rounded-md  max-w-full',
       separator: 'mx-2',
       label: 'text-sm text-gray-200 mb-1.5 block',
       segmentWrapper: 'flex gap-0.5 items-center w-fit',

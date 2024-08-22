@@ -1,3 +1,5 @@
+import { I18nProvider as LocaleProvider } from '@react-aria/i18n';
+
 import { Calendar, RangeCalendar } from './calendar';
 import { useDatePicker } from './date-picker/use-date-picker';
 import { useDateRangePicker } from './date-picker/use-date-range-picker';
@@ -15,7 +17,16 @@ export const CalendarKit = {
   useDateRangePicker,
 };
 
-export { DateInput, TimeInput, DateRangeInput, Calendar, RangeCalendar, useDatePicker, useDateRangePicker };
+export {
+  DateInput,
+  TimeInput,
+  DateRangeInput,
+  Calendar,
+  RangeCalendar,
+  useDatePicker,
+  useDateRangePicker,
+  LocaleProvider,
+};
 
 export type { CalendarProps, RangeCalendarProps } from './calendar';
 export type { UseDatePickerProps } from './date-picker/use-date-picker';

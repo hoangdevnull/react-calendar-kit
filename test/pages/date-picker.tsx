@@ -1,14 +1,14 @@
 import React from 'react';
 import { Roboto } from 'next/font/google';
-import { type DateValue } from '@internationalized/date';
-import { useDatePicker, type UseDatePickerProps } from 'react-calendar-kit';
+import { parseDate, type DateValue } from '@internationalized/date';
+import { LocaleProvider, useDatePicker, type UseDatePickerProps } from 'react-calendar-kit';
 
 import CalendarButton from './components/calendar-button';
 import { Primitives } from './components/primitives';
 
 const fontSans = Roboto({ subsets: ['latin'], weight: ['300', '400', '500'] });
 
-const DatePicker = <T extends DateValue>(props: UseDatePickerProps<T>) => {
+const DatePicker = <T extends DateValue = DateValue>(props: UseDatePickerProps<T>) => {
   const { ref, state, getCalendarProps, getDateInputProps, getDialogProps, getTriggerProps } = useDatePicker<T>(props);
 
   return (
@@ -27,4 +27,14 @@ const DatePicker = <T extends DateValue>(props: UseDatePickerProps<T>) => {
   );
 };
 
-export default DatePicker;
+const Page = () => {
+  let [value, setValue] = React.useState(parseDate('2020-02-03'));
+
+  return (
+    <LocaleProvider locale="vi-VN">
+      <DatePicker value={value} onChange={setValue} />
+    </LocaleProvider>
+  );
+};
+
+export default Page;

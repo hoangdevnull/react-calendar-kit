@@ -1,6 +1,6 @@
 {
   "name": "react-calendar-kit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -23,30 +23,30 @@
     "dev": "tsup src --watch"
   },
   "peerDependencies": {
-    "@internationalized/date": "^3.5.3",
-    "@react-aria/i18n": "^3.11.0"
+    "@internationalized/date": "^3.5.5",
+    "@react-aria/i18n": "^3.12.2"
   },
   "dependencies": {
-    "@internationalized/date": "^3.5.3",
+    "@internationalized/date": "^3.5.5",
     "@react-aria/button": "^3.9.4",
-    "@react-aria/calendar": "^3.5.7",
-    "@react-aria/datepicker": "^3.10.0",
+    "@react-aria/calendar": "^3.5.11",
+    "@react-aria/datepicker": "^3.11.2",
     "@react-aria/focus": "^3.17.0",
-    "@react-aria/i18n": "^3.11.0",
+    "@react-aria/i18n": "^3.12.2",
     "@react-aria/interactions": "^3.21.2",
     "@react-aria/utils": "^3.24.0",
     "@react-aria/visually-hidden": "^3.8.11",
-    "@react-stately/calendar": "^3.5.0",
-    "@react-stately/datepicker": "^3.9.3",
+    "@react-stately/calendar": "^3.5.4",
+    "@react-stately/datepicker": "^3.10.2",
     "clsx": "^2.1.1",
     "lodash.debounce": "^4.0.8",
     "scroll-into-view-if-needed": "^3.1.0"
   },
   "devDependencies": {
-    "@react-types/calendar": "^3.4.5",
-    "@react-types/datepicker": "^3.7.3",
-    "@react-types/dialog": "^3.5.9",
-    "@react-types/shared": "^3.23.0",
+    "@react-types/calendar": "^3.4.9",
+    "@react-types/datepicker": "^3.8.2",
+    "@react-types/dialog": "^3.5.12",
+    "@react-types/shared": "^3.24.1",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0"
   },

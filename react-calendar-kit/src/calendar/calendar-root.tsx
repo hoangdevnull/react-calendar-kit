@@ -4,7 +4,7 @@ import { useLocale } from '@react-aria/i18n';
 import { mergeProps } from '@react-aria/utils';
 import { VisuallyHidden } from '@react-aria/visually-hidden';
 
-import { cn, mergeStyles } from '../utils';
+import { cn, mergeStyles, withAttr } from '../utils';
 import Button from './button';
 import { type CalendarHeaderLayout } from './calendar';
 import { useCalendarContext } from './calendar-context';
@@ -120,6 +120,7 @@ const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTM
         calendarProps?.style,
         styles?.root
       )}
+      data-picker-expanded={withAttr(isPickerExpanded)}
       className={cn(className, classNames.root)}
       ref={ref}
     >
@@ -152,7 +153,7 @@ const CalendarRoot = forwardRef((props: CalendarRootProps, ref: ForwardedRef<HTM
           onClick={() => state.focusNextPage()}
         />
       </VisuallyHidden>
-      {footer}
+      {isPickerExpanded ? null : footer}
     </div>
   );
 });

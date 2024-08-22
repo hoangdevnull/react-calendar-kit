@@ -23,6 +23,10 @@
     "title": "Date Picker",
     "href": "/date-picker"
   },
+  "date-picker-with-time": {
+    "title": "Date Picker With Time field ",
+    "href": "/date-picker-with-time"
+  },
   "date-range-picker": {
     "title": "Date Range Picker",
     "href": "/date-range-picker"

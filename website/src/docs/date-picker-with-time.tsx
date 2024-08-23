@@ -8,6 +8,7 @@ const DatePickerWithTime = (props: UseDatePickerProps) => {
   const { ref, state, getCalendarProps, getTimeInputProps, getDateInputProps, getDialogProps, getTriggerProps } =
     useDatePicker({
       granularity: 'minute',
+      ...props,
     });
 
   return (

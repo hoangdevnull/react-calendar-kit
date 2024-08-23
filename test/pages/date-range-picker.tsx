@@ -24,7 +24,7 @@ const DatePicker = () => {
 
           {state.isOpen ? (
             <div {...getDialogProps}>
-              <Primitives.RangeCalendar {...getCalendarProps} />
+              <Primitives.RangeCalendar isDisabled withPicker {...getCalendarProps} />
             </div>
           ) : null}
         </div>

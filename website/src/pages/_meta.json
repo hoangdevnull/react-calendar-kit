@@ -31,6 +31,10 @@
     "title": "Date Range Picker",
     "href": "/date-range-picker"
   },
+  "date-range-picker-with-time": {
+    "title": "Date Range Picker With Time field ",
+    "href": "/date-range-picker-with-time"
+  },
   "-- More": {
     "type": "separator",
     "title": "Guides"

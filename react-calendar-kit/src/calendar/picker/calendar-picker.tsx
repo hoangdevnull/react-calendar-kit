@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useRef, type ElementRef } from 'react';
+import React, { memo, useMemo, useState, type ElementRef } from 'react';
 import { type CalendarDate } from '@internationalized/date';
 import { useDateFormatter } from '@react-aria/i18n';
 
@@ -17,7 +17,7 @@ const CalendarPicker = (props: Props) => {
 
   const { state, isPickerExpanded, classNames, styles } = useCalendarContext();
 
-  const highlightRef = useRef<ElementRef<'div'>>(null);
+  const [highlightRef, setHighlightRef] = useState<ElementRef<'div'>>(null);
 
   const monthDateFormatter = useDateFormatter({
     month: 'long',
@@ -53,9 +53,12 @@ const CalendarPicker = (props: Props) => {
       // * Lock the height so it not going to fill the parent container
       style={mergeStyles({ height: 'var(--picker-height)' }, style, styles?.picker?.root)}
       role="picker-root"
+      // makes the browser ignore the element and its children when tabbing
+      // @ts-ignore
+      inert={!isPickerExpanded ? 'true' : undefined}
     >
       <div
-        ref={highlightRef}
+        ref={setHighlightRef}
         className={classNames?.picker?.highlight}
         style={styles?.picker?.highlight}
         role="picker-highlight"
@@ -67,7 +70,7 @@ const CalendarPicker = (props: Props) => {
         listStyle={mergeStyles(styles?.picker?.list, styles?.picker?.monthList)}
         itemClassName={cn(classNames?.picker?.item, classNames?.picker?.monthItem)}
         itemStyle={mergeStyles(styles?.picker?.item, styles?.picker?.monthItem)}
-        initialDate={date}
+        initialDate={date.month}
         listType="month"
       />
 
@@ -78,7 +81,7 @@ const CalendarPicker = (props: Props) => {
         listStyle={mergeStyles(styles?.picker?.list, styles?.picker?.yearList)}
         itemClassName={cn(classNames?.picker?.item, classNames?.picker?.yearItem)}
         itemStyle={mergeStyles(styles?.picker?.item, styles?.picker?.yearItem)}
-        initialDate={date}
+        initialDate={date.year}
         listType="year"
       />
     </div>

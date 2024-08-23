@@ -1,21 +1,13 @@
-import React, {
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  type CSSProperties,
-  type ElementRef,
-  type MutableRefObject,
-} from 'react';
-import { type CalendarDate, type DateFields } from '@internationalized/date';
+import React, { memo, useCallback, useEffect, useRef, type CSSProperties, type ElementRef } from 'react';
+import { type DateFields } from '@internationalized/date';
 import type { PressEvent } from '@react-types/shared';
 import debounce from 'lodash.debounce';
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
+import { calculateIntersectionArea } from 'src/utils/are-rects-intersecting';
 
 import useListRefs from '../../hooks/useListRefs';
 import { type ElementProps } from '../../types/common.types';
 import { cn, mergeStyles } from '../../utils';
-import { areRectsIntersecting } from '../../utils/are-rects-intersecting';
 import Button from '../button';
 import { useCalendarContext } from '../calendar-context';
 import PickerItemEmpty from './calendar-picker-item-empty';
@@ -23,7 +15,7 @@ import PickerItemEmpty from './calendar-picker-item-empty';
 const SCROLL_DEBOUNCE_TIME = 200;
 
 interface Props extends ElementProps<'div'> {
-  initialDate: CalendarDate;
+  initialDate: number;
   options?: {
     label: string;
     value: number;
@@ -33,7 +25,7 @@ interface Props extends ElementProps<'div'> {
   listStyle?: CSSProperties;
   itemStyle?: CSSProperties;
   listType?: keyof DateFields;
-  highlightRef: MutableRefObject<HTMLDivElement>;
+  highlightRef: ElementRef<'div'>;
 }
 
 const CalendarPickerList = (props: Props) => {
@@ -61,17 +53,18 @@ const CalendarPickerList = (props: Props) => {
       if (!(e.target instanceof HTMLElement)) return;
 
       const itemRefs = getItemsRef();
-      const items = Array.from(itemRefs.values());
 
-      const item = items.find((itemEl) => {
+      const items = Array.from(itemRefs.values());
+      const item = items.findLast((itemEl) => {
         const rect1 = itemEl.getBoundingClientRect();
         const rect2 = highlightEl?.getBoundingClientRect();
 
         if (!rect2) {
           return false;
         }
+        const intersectionArea = calculateIntersectionArea(rect1, rect2);
 
-        return areRectsIntersecting(rect1, rect2);
+        return intersectionArea > 50;
       });
 
       const itemValue = Number(item?.getAttribute('data-value'));
@@ -81,19 +74,13 @@ const CalendarPickerList = (props: Props) => {
       state.setFocusedDate(selectedDate);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [state, listType, isPickerExpanded]
+    [state, initialDate, listType, isPickerExpanded]
   );
-
-  // scroll to the selected month/year when the component is mounted/opened/closed
-  useEffect(() => {
-    scrollIntoView(initialDate[listType] as number, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPickerExpanded, listType]);
 
   // add scroll event listener to listRef
   useEffect(() => {
     const currentRef = listRef.current;
-    const highlightEl = highlightRef.current;
+    const highlightEl = highlightRef;
 
     if (!highlightEl) return;
 
@@ -109,24 +96,32 @@ const CalendarPickerList = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleListScroll]);
 
-  function scrollIntoView(value: number, smooth = true) {
-    const itemsRef = getItemsRef();
-    const node = itemsRef.get(value);
+  const scrollIntoView = useCallback(
+    (value: number, smooth = true) => {
+      const itemsRef = getItemsRef();
+      const node = itemsRef.get(value);
 
-    if (!node) return;
-
-    // scroll picker list to the selected item
-    scrollIntoViewIfNeeded(node, {
-      scrollMode: 'always',
-      behavior: smooth ? 'smooth' : 'auto',
-      boundary: listRef.current,
-    });
-  }
+      if (!node) return;
+      // scroll picker list to the selected item
+      scrollIntoViewIfNeeded(node, {
+        scrollMode: 'always',
+        behavior: smooth ? 'smooth' : 'instant',
+        boundary: listRef.current,
+      });
+    },
+    [getItemsRef]
+  );
 
   const onPickerItemPressed = useCallback(
     (e: PressEvent) => {
       const target = e.target as HTMLElement;
       const value = Number(target.getAttribute('data-value'));
+
+      if (value === state.focusedDate[listType]) {
+        setPickerExpanded?.(false);
+        return;
+      }
+
       if (!value) return;
       scrollIntoView(value);
     },
@@ -173,6 +168,13 @@ const CalendarPickerList = (props: Props) => {
     },
     [getItemsRef, options.length, setPickerExpanded, headerRef]
   );
+
+  // scroll to the selected month/year when the component is mounted/opened/closed
+  useEffect(() => {
+    if (!isPickerExpanded) return;
+    scrollIntoView(initialDate, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPickerExpanded]);
 
   return (
     <div

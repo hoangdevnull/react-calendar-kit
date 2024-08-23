@@ -6,7 +6,9 @@ import { CK } from './calendar-primitives';
 
 const DatePickerWithTime = (props: UseDatePickerProps) => {
   const { ref, state, getCalendarProps, getTimeInputProps, getDateInputProps, getDialogProps, getTriggerProps } =
-    useDatePicker(props);
+    useDatePicker({
+      granularity: 'minute',
+    });
 
   return (
     <div>
@@ -18,7 +20,11 @@ const DatePickerWithTime = (props: UseDatePickerProps) => {
             visibleMonths={1}
             weekdayStyle="short"
             withPicker
-            footer={<CK.TimeInput {...getTimeInputProps} />}
+            footer={
+              <div className="px-6 pb-4">
+                <CK.TimeInput {...getTimeInputProps} />
+              </div>
+            }
           />
         </div>
       ) : null}

@@ -64,11 +64,11 @@ export const useDatePicker = <T extends DateValue>(props = {} as UseDatePickerPr
       : null;
   const withTimeInput = !!timeGranularity;
 
-  const { onPress, isDisabled, ...baseTriggerProps } = buttonProps;
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const { onPress: _onPress, isDisabled, ...baseTriggerProps } = buttonProps;
 
   const getTriggerProps = {
     ...baseTriggerProps,
-    onPress,
     onClick: () => state.toggle(),
     'data-disabled': withAttr(isDisabled),
   } as ElementProps<'button'>;

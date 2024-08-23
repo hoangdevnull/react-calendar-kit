@@ -12,18 +12,64 @@ import { useRangeCalendar, type AriaCalendarGridProps } from '@react-aria/calend
 import { useLocale } from '@react-aria/i18n';
 import { useRangeCalendarState } from '@react-stately/calendar';
 import { type AriaRangeCalendarProps } from '@react-types/calendar';
+import { useControllableState } from 'src/hooks/useControlableState';
 
 import { useMergeRefs } from '../hooks/useMergeRefs';
 import { type SupportedCalendars } from '../types/common.types';
-import { CalendarProvider, type CalendarClassNames } from './calendar-context';
-import CalendarRoot from './calendar-root';
+import { CalendarProvider, type CalendarClassNames, type CalendarStyles } from './calendar-context';
+import CalendarRoot, { type CalendarRootProps } from './calendar-root';
 
-interface Props<T extends DateValue> extends AriaRangeCalendarProps<T> {
+interface Props<T extends DateValue> extends AriaRangeCalendarProps<T>, Pick<CalendarRootProps, 'header' | 'footer'> {
   createCalendar?: (calendar: SupportedCalendars) => CalendarType | null;
+  /**
+   * The style of the weekday labels.
+   */
   weekdayStyle?: AriaCalendarGridProps['weekdayStyle'];
+  /**
+   * The number of months grid to display. Max 3 and min 1
+   */
   visibleMonths?: number;
+  /**
+   * Root className for calendar
+   */
   className?: string;
+  /**
+   * className for each components in the calendar
+   */
   classNames?: CalendarClassNames;
+
+  /**
+   * styles for each components in the calendar
+   */
+  styles?: CalendarStyles;
+  /**
+   * Using month year picker instead on basic label
+   */
+  withPicker?: boolean;
+
+  /**
+   * Lock the calendar height when the calendar picker is open.
+   * Prefer choose minimum height when the calendar picker is not open
+   */
+  pickerHeight?: number;
+
+  /**
+   * Number of empty item to display in the month picker to force list scrollable
+   */
+  pickerEmptyItem?: number;
+
+  /**
+   * Open the calendar picker for default - uncontrolled style
+   */
+  defaultPickerOpen?: boolean;
+  /**
+   * Open the calendar picker controlled style
+   */
+  pickerOpen?: boolean;
+  /**
+   * Trigger when pickerOpen State Change
+   */
+  onPickerOpenChange?: (open: boolean) => void;
 }
 
 function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<HTMLDivElement>) {
@@ -32,12 +78,20 @@ function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<H
     maxValue = new CalendarDate(2099, 12, 31),
     className,
     classNames = {},
+    styles = {} as CalendarStyles,
     visibleMonths: visibleMonthsProp = 1,
     weekdayStyle = 'short',
     createCalendar: createCalendarProp,
+    withPicker = false,
+    pickerHeight = 278,
+    pickerEmptyItem = 3,
+    pickerOpen,
+    defaultPickerOpen = false,
+    onPickerOpenChange,
+    ...etc
   } = props;
   const { locale } = useLocale();
-  const visibleMonths = Math.max(1, Math.min(visibleMonthsProp, 3));
+  const visibleMonths = withPicker ? 1 : Math.max(1, Math.min(visibleMonthsProp, 3));
   const visibleDuration = useMemo(() => ({ months: visibleMonths }), [visibleMonths]);
 
   const state = useRangeCalendarState({
@@ -60,6 +114,12 @@ function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<H
     domRef
   );
 
+  const [isPickerExpanded, setPickerExpanded] = useControllableState({
+    prop: pickerOpen,
+    defaultProp: defaultPickerOpen,
+    onChange: onPickerOpenChange,
+  });
+
   const mergedRef = useMergeRefs(domRef, ref);
 
   return (
@@ -69,9 +129,12 @@ function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<H
         visibleMonths,
         weekdayStyle,
         classNames,
-        withPicker: false,
-        isPickerExpanded: false,
-        setPickerExpanded: () => null,
+        styles,
+        withPicker,
+        pickerHeight,
+        pickerEmptyItem,
+        isPickerExpanded,
+        setPickerExpanded,
       }}
     >
       <CalendarRoot
@@ -82,6 +145,7 @@ function RangeCalendar<T extends DateValue>(props: Props<T>, ref: ForwardedRef<H
         title={title}
         errorMessageProps={errorMessageProps}
         className={className}
+        {...etc}
       />
     </CalendarProvider>
   );
